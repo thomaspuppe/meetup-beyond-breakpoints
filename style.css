@@ -1,0 +1,296 @@
+/* Basecamp Design Language */
+:root {
+    --bg-primary: #FAFAF8;
+    --text-primary: #1D1D1D;
+    --accent-primary: #1CA74E;
+    --accent-secondary: #3B5998;
+    --bg-code: #F5F5F3;
+    --border-subtle: #E5E5E1;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.12);
+    --border-radius: 6px;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.slide-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 4rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    visibility: hidden;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+/* Slide Types */
+.slide[data-slide-type="title"] h1 {
+    font-size: 64px;
+    margin: 0;
+}
+.slide[data-slide-type="title"] .subtitle {
+    font-size: 28px;
+    margin-top: 1rem;
+    color: #555;
+}
+
+.slide[data-slide-type="headline-text"] h2 {
+    font-size: 48px;
+    margin-bottom: 1rem;
+}
+.slide[data-slide-type="headline-text"] p {
+    font-size: 24px;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+.slide[data-slide-type="bullets"] h2 {
+    font-size: 48px;
+    margin-bottom: 2rem;
+    align-self: flex-start;
+    width: 100%;
+    text-align: left;
+}
+.slide[data-slide-type="bullets"] ul {
+    font-size: 28px;
+    line-height: 1.8;
+    list-style-position: inside;
+    text-align: left;
+    align-self: flex-start;
+    padding-left: 0;
+    margin: 0;
+}
+.slide[data-slide-type="bullets"] ul li {
+    margin-bottom: 1rem;
+}
+
+.slide[data-slide-type="image-only"] {
+    padding: 0;
+}
+.slide[data-slide-type="image-only"] img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide[data-slide-type="image-text"] {
+    flex-direction: row;
+    gap: 2rem;
+    text-align: left;
+}
+.slide[data-slide-type="image-text"] .image-container {
+    flex: 1;
+}
+.slide[data-slide-type="image-text"] img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-subtle);
+}
+.slide[data-slide-type="image-text"] .text-container {
+    flex: 1;
+}
+.slide[data-slide-type="image-text"] h2 {
+    font-size: 48px;
+}
+.slide[data-slide-type="image-text"] p {
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+.slide[data-slide-type="code"] {
+    text-align: left;
+}
+.slide[data-slide-type="code"] h2 {
+    font-size: 36px;
+    margin-bottom: 1rem;
+}
+.slide[data-slide-type="code"] pre {
+    background-color: var(--bg-code);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    width: 80%;
+    box-shadow: var(--shadow-subtle);
+    font-size: 18px;
+}
+
+.slide[data-slide-type="headline-images"] h2 {
+    font-size: 48px;
+    margin-bottom: 2rem;
+}
+
+.slide[data-slide-type="headline-images"] .image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 80%;
+    max-width: 1000px;
+}
+
+.slide[data-slide-type="headline-images"] .image-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-subtle);
+}
+
+.slide[data-slide-type="code-explanation"] {
+    text-align: left;
+}
+.slide[data-slide-type="code-explanation"] h2 {
+    font-size: 48px;
+    margin-bottom: 2rem;
+}
+.slide[data-slide-type="code-explanation"] pre {
+    background-color: var(--bg-code);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    width: 80%;
+    box-shadow: var(--shadow-subtle);
+    font-size: 22px;
+    margin-bottom: 1rem;
+}
+.slide[data-slide-type="code-explanation"] .explanation-container {
+    width: 80%;
+    min-height: 100px; /* Reserve space for explanations */
+    position: relative;
+}
+.slide[data-slide-type="code-explanation"] .explanation-container .fragment {
+    position: absolute;
+    font-size: 22px;
+    line-height: 1.6;
+}
+.slide[data-slide-type="code-explanation"] [data-highlight-id] {
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+.slide[data-slide-type="code-explanation"] [data-highlight-id].highlight-active {
+    background-color: rgba(28, 167, 78, 0.2);
+}
+
+/* Fragment styles */
+.fragment {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.fragment.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* UI Elements */
+.slide-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 16px;
+    background-color: rgba(0,0,0,0.1);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    z-index: 10;
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background-color: var(--accent-primary);
+    width: 0;
+    transition: width 0.2s linear;
+    z-index: 10;
+}
+
+.fullscreen-hint {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--accent-secondary);
+    color: white;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    z-index: 10;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.toc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+.toc-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.toc-content {
+    background-color: var(--bg-primary);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    width: 90%;
+}
+.toc-content h2 {
+    margin-top: 0;
+    color: var(--text-primary);
+}
+.toc-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.toc-content li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    color: var(--text-primary);
+}
+.toc-content li:hover {
+    color: var(--accent-primary);
+}
