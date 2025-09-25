@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibecoding Slide Deck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <style>
+        /* Basecamp Design Language */
+        :root {
+            --bg-primary: #FAFAF8;
+            --text-primary: #1D1D1D;
+            --accent-primary: #1CA74E;
+            --accent-secondary: #3B5998;
+            --bg-code: #F5F5F3;
+            --border-subtle: #E5E5E1;
+            --shadow-subtle: 0 1px 3px rgba(0,0,0,0.12);
+            --border-radius: 6px;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 4rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            visibility: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        /* Slide Types */
+        .slide[data-slide-type="title"] h1 {
+            font-size: 64px;
+            margin: 0;
+        }
+        .slide[data-slide-type="title"] .subtitle {
+            font-size: 28px;
+            margin-top: 1rem;
+            color: #555;
+        }
+
+        .slide[data-slide-type="headline-text"] h2 {
+            font-size: 48px;
+            margin-bottom: 1rem;
+        }
+        .slide[data-slide-type="headline-text"] p {
+            font-size: 24px;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        .slide[data-slide-type="bullets"] h2 {
+            font-size: 48px;
+            margin-bottom: 2rem;
+            align-self: flex-start;
+            width: 100%;
+            text-align: left;
+        }
+        .slide[data-slide-type="bullets"] ul {
+            font-size: 28px;
+            line-height: 1.8;
+            list-style-position: inside;
+            text-align: left;
+            align-self: flex-start;
+            padding-left: 0;
+            margin: 0;
+        }
+        .slide[data-slide-type="bullets"] ul li {
+            margin-bottom: 1rem;
+        }
+
+        .slide[data-slide-type="image-only"] {
+            padding: 0;
+        }
+        .slide[data-slide-type="image-only"] img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide[data-slide-type="image-text"] {
+            flex-direction: row;
+            gap: 2rem;
+            text-align: left;
+        }
+        .slide[data-slide-type="image-text"] .image-container {
+            flex: 1;
+        }
+        .slide[data-slide-type="image-text"] img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-subtle);
+        }
+        .slide[data-slide-type="image-text"] .text-container {
+            flex: 1;
+        }
+        .slide[data-slide-type="image-text"] h2 {
+            font-size: 48px;
+        }
+        .slide[data-slide-type="image-text"] p {
+            font-size: 24px;
+            line-height: 1.6;
+        }
+
+        .slide[data-slide-type="code"] {
+            text-align: left;
+        }
+        .slide[data-slide-type="code"] h2 {
+            font-size: 36px;
+            margin-bottom: 1rem;
+        }
+        .slide[data-slide-type="code"] pre {
+            background-color: var(--bg-code);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            width: 80%;
+            box-shadow: var(--shadow-subtle);
+            font-size: 18px;
+        }
+
+        .slide[data-slide-type="headline-images"] h2 {
+            font-size: 48px;
+            margin-bottom: 2rem;
+        }
+
+        .slide[data-slide-type="headline-images"] .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1.5rem;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .slide[data-slide-type="headline-images"] .image-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        /* Fragment styles */
+        .fragment {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .fragment.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* UI Elements */
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 16px;
+            background-color: rgba(0,0,0,0.1);
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            z-index: 10;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: var(--accent-primary);
+            width: 0;
+            transition: width 0.2s linear;
+            z-index: 10;
+        }
+        
+        .fullscreen-hint {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-secondary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            z-index: 10;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .toc-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .toc-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .toc-content {
+            background-color: var(--bg-primary);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 600px;
+            width: 90%;
+        }
+        .toc-content h2 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+        .toc-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc-content li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+        .toc-content li:hover {
+            color: var(--accent-primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active" data-slide-type="title" data-title="Welcome">
+            <h1>Welcome to Vibecoding</h1>
+            <p class="subtitle">A Basecamp-Inspired Slide Deck</p>
+        </div>
+
+        <!-- Slide 2: Headline + Text -->
+        <div class="slide" data-slide-type="headline-text" data-title="Core Idea">
+            <h2>Clean & Focused</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        </div>
+
+        <!-- Slide 3: Bullet Points -->
+        <div class="slide" data-slide-type="bullets" data-title="Key Features">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Single HTML file for portability</li>
+                <li>Modern, clean Basecamp-like design</li>
+                <li>Keyboard, click, and swipe navigation</li>
+                <li>Includes multiple slide layouts</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Image Only -->
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <img src="https://picsum.photos/1600/900?grayscale" alt="Grayscale random image">
+        </div>
+
+        <!-- Slide 5: Image + Text -->
+        <div class="slide" data-slide-type="image-text" data-title="Split Layout">
+            <div class="image-container">
+                <img src="https://picsum.photos/800/600" alt="Random image">
+            </div>
+            <div class="text-container">
+                <h2>Image & Text</h2>
+                <p>Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Code Example -->
+        <div class="slide" data-slide-type="code" data-title="Code Example">
+            <h2>Code Example</h2>
+            <pre><code class="language-js">
+function helloWorld() {
+  console.log("Hello, from the slide deck!");
+}
+
+// Call the function
+helloWorld();
+            </code></pre>
+        </div>
+
+        <!-- Slide 7: Headline + 4 Images with Fragments -->
+        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
+            <h2>A Gallery of Images</h2>
+            <div class="image-grid">
+                <img src="./images/font_steps.png" alt="Random image 1" class="fragment">
+                <img src="./images/font_multi_steps.png" alt="Random image 2" class="fragment">
+                <img src="./images/font_many_steps.png" alt="Random image 3" class="fragment">
+                <img src="./images/font_clamp.png" alt="Random image 4" class="fragment">
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Elements -->
+    <div class="slide-counter"></div>
+    <div class="progress-bar"></div>
+    <div class="fullscreen-hint">Press F11 for Fullscreen (Click to dismiss)</div>
+    <div class="toc-overlay">
+        <div class="toc-content">
+            <h2>Table of Contents</h2>
+            <ul id="toc-list"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const slideCounter = document.querySelector('.slide-counter');
+            const progressBar = document.querySelector('.progress-bar');
+            const fullscreenHint = document.querySelector('.fullscreen-hint');
+            const tocOverlay = document.querySelector('.toc-overlay');
+            const tocList = document.getElementById('toc-list');
+
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function updateSlide() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                updateCounter();
+                updateProgressBar();
+                updateUrlHash();
+            }
+
+            function updateUrlHash() {
+                const newHash = `#${currentSlide + 1}`;
+                if (window.location.hash !== newHash) {
+                    // Use pushState to allow browser back/forward navigation between slides
+                    history.pushState({slide: currentSlide}, `Slide ${currentSlide + 1}`, newHash);
+                }
+            }
+
+            function updateCounter() {
+                slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            }
+
+            function updateProgressBar() {
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function nextSlide() {
+                const currentFragments = slides[currentSlide].querySelectorAll('.fragment:not(.visible)');
+                if (currentFragments.length > 0) {
+                    currentFragments[0].classList.add('visible');
+                } else {
+                    // Hide fragments on current slide before moving to next
+                    slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateSlide();
+                }
+            }
+
+            function prevSlide() {
+                const visibleFragments = slides[currentSlide].querySelectorAll('.fragment.visible');
+                if (visibleFragments.length > 0) {
+                    visibleFragments[visibleFragments.length - 1].classList.remove('visible');
+                } else {
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    // Show all fragments on the previous slide when moving back
+                    updateSlide();
+                    slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.add('visible'));
+                }
+            }
+            
+            function goToSlide(index) {
+                if (index >= 0 && index < totalSlides) {
+                    // Reset fragments on the old slide
+                    if (slides[currentSlide]) {
+                        slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
+                    }
+                    currentSlide = index;
+                    updateSlide();
+                }
+            }
+
+            // Handle hash changes for browser navigation
+            window.addEventListener('popstate', (e) => {
+                if (e.state && e.state.slide !== undefined) {
+                    goToSlide(e.state.slide);
+                } else {
+                    // Handle initial load or hashes without state
+                    const slideNum = parseInt(window.location.hash.substring(1), 10) - 1;
+                    if (!isNaN(slideNum)) {
+                        goToSlide(slideNum);
+                    }
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (tocOverlay.classList.contains('visible')) {
+                    if (e.key === 'Escape') {
+                        toggleTOC();
+                    }
+                    return;
+                }
+
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (e.key === 'Home') {
+                    goToSlide(0);
+                } else if (e.key === 'End') {
+                    goToSlide(totalSlides - 1);
+                } else if (e.key.toLowerCase() === 't') {
+                    toggleTOC();
+                }
+            });
+
+            // Click/Tap navigation
+            document.addEventListener('click', (e) => {
+                // Don't navigate if clicking on interactive elements
+                if (e.target.closest('a, button, .toc-overlay, .fullscreen-hint')) return;
+                nextSlide();
+            });
+
+            // Swipe navigation
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            document.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            });
+
+            document.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchendX < touchstartX) {
+                    nextSlide();
+                }
+                if (touchendX > touchstartX) {
+                    prevSlide();
+                }
+            }
+
+            // Fullscreen hint
+            fullscreenHint.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fullscreenHint.style.display = 'none';
+            });
+            
+            // Table of Contents
+            function buildTOC() {
+                slides.forEach((slide, index) => {
+                    const title = slide.dataset.title || `Slide ${index + 1}`;
+                    const li = document.createElement('li');
+                    li.textContent = title;
+                    li.addEventListener('click', () => {
+                        goToSlide(index);
+                        toggleTOC();
+                    });
+                    tocList.appendChild(li);
+                });
+            }
+
+            function toggleTOC() {
+                tocOverlay.classList.toggle('visible');
+            }
+            
+            tocOverlay.addEventListener('click', (e) => {
+                if (e.target === tocOverlay) {
+                    toggleTOC();
+                }
+            });
+
+            // Initial setup
+            function initialize() {
+                const slideNum = parseInt(window.location.hash.substring(1), 10) - 1;
+                if (!isNaN(slideNum) && slideNum >= 0 && slideNum < totalSlides) {
+                    currentSlide = slideNum;
+                }
+                updateSlide();
+                buildTOC();
+                Prism.highlightAll();
+            }
+
+            initialize();
+        });
+    </script>
+</body>
+</html>
