@@ -175,6 +175,41 @@
             box-shadow: var(--shadow-subtle);
         }
 
+        .slide[data-slide-type="code-explanation"] {
+            text-align: left;
+        }
+        .slide[data-slide-type="code-explanation"] h2 {
+            font-size: 48px;
+            margin-bottom: 2rem;
+        }
+        .slide[data-slide-type="code-explanation"] pre {
+            background-color: var(--bg-code);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            width: 80%;
+            box-shadow: var(--shadow-subtle);
+            font-size: 22px;
+            margin-bottom: 1rem;
+        }
+        .slide[data-slide-type="code-explanation"] .explanation-container {
+            width: 80%;
+            min-height: 100px; /* Reserve space for explanations */
+            position: relative;
+        }
+        .slide[data-slide-type="code-explanation"] .explanation-container .fragment {
+            position: absolute;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+        .slide[data-slide-type="code-explanation"] [data-highlight-id] {
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+        .slide[data-slide-type="code-explanation"] [data-highlight-id].highlight-active {
+            background-color: rgba(28, 167, 78, 0.2);
+        }
+
         /* Fragment styles */
         .fragment {
             opacity: 0;
@@ -335,6 +370,23 @@ helloWorld();
                 <img src="./images/font_clamp.png" alt="Random image 4" class="fragment">
             </div>
         </div>
+
+        <!-- Slide 8: Code Explanation -->
+        <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
+            <h2>Dissecting CSS `clamp()`</h2>
+            <pre><code class="no-highlight">font-size: clamp(<span data-highlight-id="1">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="3">2.5rem</span>);</code></pre>
+            <div class="explanation-container">
+                <div class="fragment" data-explains="1">
+                    <p><strong>Minimum Value:</strong> This is the smallest the font size will ever be. It acts as the lower bound.</p>
+                </div>
+                <div class="fragment" data-explains="2">
+                    <p><strong>Preferred Value:</strong> This is the ideal, flexible value that scales with the viewport width.</p>
+                </div>
+                <div class="fragment" data-explains="3">
+                    <p><strong>Maximum Value:</strong> This is the largest the font size can get, acting as the upper bound.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- UI Elements -->
@@ -389,26 +441,79 @@ helloWorld();
             }
 
             function nextSlide() {
-                const currentFragments = slides[currentSlide].querySelectorAll('.fragment:not(.visible)');
-                if (currentFragments.length > 0) {
-                    currentFragments[0].classList.add('visible');
+                const slide = slides[currentSlide];
+                const fragments = Array.from(slide.querySelectorAll('.fragment'));
+                const visibleFragments = fragments.filter(f => f.classList.contains('visible'));
+                const nextFragment = fragments[visibleFragments.length];
+
+                if (nextFragment) {
+                    if (slide.dataset.slideType === 'code-explanation') {
+                        // Hide all other fragments in this container
+                        fragments.forEach(f => f.classList.remove('visible'));
+                        // De-highlight all spans
+                        slide.querySelectorAll('[data-highlight-id]').forEach(h => h.classList.remove('highlight-active'));
+                        
+                        // Show the next fragment
+                        nextFragment.classList.add('visible');
+                        // Highlight the corresponding code, if it exists
+                        const highlightId = nextFragment.dataset.explains;
+                        if (highlightId) {
+                            const highlightEl = slide.querySelector(`[data-highlight-id="${highlightId}"]`);
+                            if (highlightEl) {
+                                highlightEl.classList.add('highlight-active');
+                            }
+                        }
+                    } else {
+                        nextFragment.classList.add('visible');
+                    }
                 } else {
-                    // Hide fragments on current slide before moving to next
-                    slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
+                    // Reset slide before moving on
+                    resetSlideFragments(slide);
                     currentSlide = (currentSlide + 1) % totalSlides;
                     updateSlide();
                 }
             }
 
             function prevSlide() {
-                const visibleFragments = slides[currentSlide].querySelectorAll('.fragment.visible');
+                const slide = slides[currentSlide];
+                const fragments = Array.from(slide.querySelectorAll('.fragment'));
+                const visibleFragments = fragments.filter(f => f.classList.contains('visible'));
+
                 if (visibleFragments.length > 0) {
-                    visibleFragments[visibleFragments.length - 1].classList.remove('visible');
+                    const lastVisibleFragment = visibleFragments[visibleFragments.length - 1];
+                    
+                    if (slide.dataset.slideType === 'code-explanation') {
+                        lastVisibleFragment.classList.remove('visible');
+                        const highlightId = lastVisibleFragment.dataset.explains;
+                        if (highlightId) {
+                            const highlightEl = slide.querySelector(`[data-highlight-id="${highlightId}"]`);
+                            if (highlightEl) {
+                                highlightEl.classList.remove('highlight-active');
+                            }
+                        }
+
+                        const prevFragment = visibleFragments[visibleFragments.length - 2];
+                        if (prevFragment) {
+                            prevFragment.classList.add('visible');
+                            const prevHighlightId = prevFragment.dataset.explains;
+                            if (prevHighlightId) {
+                                const prevHighlightEl = slide.querySelector(`[data-highlight-id="${prevHighlightId}"]`);
+                                if (prevHighlightEl) {
+                                    prevHighlightEl.classList.add('highlight-active');
+                                }
+                            }
+                        }
+                    } else {
+                        lastVisibleFragment.classList.remove('visible');
+                    }
                 } else {
                     currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                    // Show all fragments on the previous slide when moving back
                     updateSlide();
-                    slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.add('visible'));
+                    // When moving back to a slide, show all fragments by default
+                    const prevSlideEl = slides[currentSlide];
+                    if (prevSlideEl.dataset.slideType !== 'code-explanation') {
+                        prevSlideEl.querySelectorAll('.fragment').forEach(f => f.classList.add('visible'));
+                    }
                 }
             }
             
@@ -416,10 +521,17 @@ helloWorld();
                 if (index >= 0 && index < totalSlides) {
                     // Reset fragments on the old slide
                     if (slides[currentSlide]) {
-                        slides[currentSlide].querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
+                        resetSlideFragments(slides[currentSlide]);
                     }
                     currentSlide = index;
                     updateSlide();
+                }
+            }
+
+            function resetSlideFragments(slide) {
+                slide.querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
+                if (slide.dataset.slideType === 'code-explanation') {
+                    slide.querySelectorAll('[data-highlight-id]').forEach(h => h.classList.remove('highlight-active'));
                 }
             }
 
@@ -523,6 +635,8 @@ helloWorld();
                 if (!isNaN(slideNum) && slideNum >= 0 && slideNum < totalSlides) {
                     currentSlide = slideNum;
                 }
+                // Make sure fragments are reset on initial load
+                slides.forEach(resetSlideFragments);
                 updateSlide();
                 buildTOC();
                 Prism.highlightAll();
