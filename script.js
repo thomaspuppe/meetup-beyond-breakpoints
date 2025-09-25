@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fullscreenHint = document.querySelector('.fullscreen-hint');
     const tocOverlay = document.querySelector('.toc-overlay');
     const tocList = document.getElementById('toc-list');
+    const gridOverlay = document.querySelector('.grid-overlay');
+    const gridContainer = document.getElementById('grid-container');
 
     let currentSlide = 0;
     const totalSlides = slides.length;
@@ -38,34 +40,65 @@ document.addEventListener('DOMContentLoaded', () => {
     function nextSlide() {
         const slide = slides[currentSlide];
         const fragments = Array.from(slide.querySelectorAll('.fragment'));
-        const visibleFragments = fragments.filter(f => f.classList.contains('visible'));
-        const nextFragment = fragments[visibleFragments.length];
+        const isLastSlide = currentSlide === totalSlides - 1;
 
-        if (nextFragment) {
-            if (slide.dataset.slideType === 'code-explanation') {
-                // Hide all other fragments in this container
-                fragments.forEach(f => f.classList.remove('visible'));
-                // De-highlight all spans
-                slide.querySelectorAll('[data-highlight-id]').forEach(h => h.classList.remove('highlight-active'));
-                
-                // Show the next fragment
-                nextFragment.classList.add('visible');
-                // Highlight the corresponding code, if it exists
-                const highlightId = nextFragment.dataset.explains;
-                if (highlightId) {
-                    const highlightEl = slide.querySelector(`[data-highlight-id="${highlightId}"]`);
-                    if (highlightEl) {
-                        highlightEl.classList.add('highlight-active');
+        let hasNextFragment = false;
+        if (slide.dataset.slideType === 'code-explanation') {
+            const currentFragmentIndex = fragments.findIndex(f => f.classList.contains('visible'));
+            const nextFragmentIndex = currentFragmentIndex + 1;
+            hasNextFragment = nextFragmentIndex < fragments.length;
+        } else {
+            const visibleFragments = fragments.filter(f => f.classList.contains('visible'));
+            hasNextFragment = visibleFragments.length < fragments.length;
+        }
+
+        // If we are on the last slide and there are no more fragments, do nothing.
+        if (isLastSlide && !hasNextFragment) {
+            return;
+        }
+
+        if (slide.dataset.slideType === 'code-explanation') {
+            const currentFragmentIndex = fragments.findIndex(f => f.classList.contains('visible'));
+            const nextFragmentIndex = currentFragmentIndex + 1;
+
+            // If there are more fragments to show on this slide
+            if (nextFragmentIndex < fragments.length) {
+                // Hide current fragment and its highlight
+                if (currentFragmentIndex > -1) {
+                    fragments[currentFragmentIndex].classList.remove('visible');
+                    const currentHighlightId = fragments[currentFragmentIndex].dataset.explains;
+                    if (currentHighlightId) {
+                        const currentHighlightEl = slide.querySelector(`[data-highlight-id="${currentHighlightId}"]`);
+                        if (currentHighlightEl) currentHighlightEl.classList.remove('highlight-active');
                     }
                 }
-            } else {
+                
+                // Show next fragment and its highlight
+                const nextFragment = fragments[nextFragmentIndex];
                 nextFragment.classList.add('visible');
+                const nextHighlightId = nextFragment.dataset.explains;
+                if (nextHighlightId) {
+                    const nextHighlightEl = slide.querySelector(`[data-highlight-id="${nextHighlightId}"]`);
+                    if (nextHighlightEl) nextHighlightEl.classList.add('highlight-active');
+                }
+            } else {
+                // No more fragments, go to next slide
+                resetSlideFragments(slide);
+                currentSlide++;
+                updateSlide();
             }
         } else {
-            // Reset slide before moving on
-            resetSlideFragments(slide);
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlide();
+            // Standard fragment logic
+            const visibleFragments = fragments.filter(f => f.classList.contains('visible'));
+            const nextFragment = fragments[visibleFragments.length];
+
+            if (nextFragment) {
+                nextFragment.classList.add('visible');
+            } else {
+                resetSlideFragments(slide);
+                currentSlide++;
+                updateSlide();
+            }
         }
     }
 
@@ -108,6 +141,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevSlideEl = slides[currentSlide];
             if (prevSlideEl.dataset.slideType !== 'code-explanation') {
                 prevSlideEl.querySelectorAll('.fragment').forEach(f => f.classList.add('visible'));
+            } else {
+                // For code-explanation, show the last fragment
+                const fragments = Array.from(prevSlideEl.querySelectorAll('.fragment'));
+                if (fragments.length > 0) {
+                    const lastFragment = fragments[fragments.length - 1];
+                    lastFragment.classList.add('visible');
+                    const highlightId = lastFragment.dataset.explains;
+                    if (highlightId) {
+                        const highlightEl = prevSlideEl.querySelector(`[data-highlight-id="${highlightId}"]`);
+                        if (highlightEl) {
+                            highlightEl.classList.add('highlight-active');
+                        }
+                    }
+                }
             }
         }
     }
@@ -152,6 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (gridOverlay.classList.contains('visible')) {
+            if (e.key === 'Escape') {
+                toggleGrid();
+            }
+            return;
+        }
+
         if (e.key === 'ArrowRight' || e.key === ' ') {
             nextSlide();
         } else if (e.key === 'ArrowLeft') {
@@ -162,6 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
             goToSlide(totalSlides - 1);
         } else if (e.key.toLowerCase() === 't') {
             toggleTOC();
+        } else if (e.key.toLowerCase() === 'g') {
+            toggleGrid();
         }
     });
 
@@ -224,6 +280,82 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Grid View
+    function buildAndPositionGrid() {
+        gridContainer.innerHTML = ''; // Clear existing grid
+
+        // 1. Calculate grid dimensions to be as square as possible
+        const cols = Math.ceil(Math.sqrt(totalSlides));
+        const rows = Math.ceil(totalSlides / cols);
+
+        gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+        // 2. Create and append all thumbnails
+        const slideClones = [];
+        slides.forEach((slide, index) => {
+            const thumbnail = document.createElement('div');
+            thumbnail.classList.add('grid-thumbnail');
+            
+            const clone = slide.cloneNode(true);
+            clone.classList.add('slide-clone');
+            clone.classList.remove('active');
+            
+            clone.querySelectorAll('.fragment').forEach(f => f.classList.add('visible'));
+            
+            if (clone.dataset.slideType === 'code-explanation') {
+                clone.querySelectorAll('[data-highlight-id]').forEach(h => h.classList.remove('highlight-active'));
+                const fragments = clone.querySelectorAll('.fragment');
+                if (fragments.length > 0) {
+                    const lastFragment = fragments[fragments.length - 1];
+                    const highlightId = lastFragment.dataset.explains;
+                    if (highlightId) {
+                        const highlightEl = clone.querySelector(`[data-highlight-id="${highlightId}"]`);
+                        if (highlightEl) highlightEl.classList.add('highlight-active');
+                    }
+                }
+            }
+
+            thumbnail.appendChild(clone);
+            slideClones.push(clone);
+
+            const slideNumber = document.createElement('div');
+            slideNumber.classList.add('slide-number');
+            slideNumber.textContent = index + 1;
+            thumbnail.appendChild(slideNumber);
+
+            thumbnail.addEventListener('click', () => {
+                toggleGrid(); // Hide grid first
+                goToSlide(index);
+            });
+
+            gridContainer.appendChild(thumbnail);
+        });
+
+        // 3. Calculate scale factor and apply it
+        // This needs to be done after the grid is rendered in the DOM to have a width.
+        const firstThumbnail = gridContainer.querySelector('.grid-thumbnail');
+        if (!firstThumbnail) return;
+
+        const thumbWidth = firstThumbnail.offsetWidth;
+        const slideBaseWidth = 1280; // Assuming a common slide width like 1280px
+        const scale = thumbWidth / slideBaseWidth;
+        const inverseScale = 1 / scale;
+
+        slideClones.forEach(clone => {
+            clone.style.width = `${inverseScale * 100}%`;
+            clone.style.height = `${inverseScale * 100}%`;
+            clone.style.transform = `scale(${scale})`;
+        });
+    }
+
+    function toggleGrid() {
+        const isVisible = gridOverlay.classList.toggle('visible');
+        if (isVisible) {
+            buildAndPositionGrid();
+        }
+    }
+
     // Initial setup
     function initialize() {
         const slideNum = parseInt(window.location.hash.substring(1), 10) - 1;
@@ -234,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slides.forEach(resetSlideFragments);
         updateSlide();
         buildTOC();
+        // buildGrid(); // Grid is now built on-demand
         Prism.highlightAll();
     }
 
