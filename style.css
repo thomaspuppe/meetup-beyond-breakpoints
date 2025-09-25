@@ -202,6 +202,26 @@ body {
     background-color: rgba(28, 167, 78, 0.2);
 }
 
+.slide[data-slide-type="quote"] blockquote {
+    font-size: 48px;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 800px;
+    border-left: 5px solid var(--accent-primary);
+    padding-left: 2rem;
+    margin: 0;
+    text-align: left;
+}
+
+.slide[data-slide-type="quote"] footer {
+    font-size: 24px;
+    margin-top: 2rem;
+    color: #555;
+    max-width: 800px;
+    width: 100%;
+    text-align: right;
+}
+
 /* Fragment styles */
 .fragment {
     opacity: 0;
