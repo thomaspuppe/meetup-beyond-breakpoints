@@ -103,6 +103,19 @@ body {
     height: 100%;
     object-fit: cover;
 }
+.slide[data-slide-type="image-only"] video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.slide[data-slide-type="image-only"] iframe {
+    width: 90%;
+    height: 90%;
+
+    resize: both; 
+    overflow: scroll; 
+    border: 1px solid #ccc;
+}
 
 .slide[data-slide-type="image-text"] {
     flex-direction: row;

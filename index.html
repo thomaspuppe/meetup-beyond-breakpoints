@@ -11,7 +11,7 @@
 
     <div class="slide-container">
         <!-- Slide 1: Title -->
-        <div class="slide active" data-slide-type="title" data-title="Welcome">
+        <div class="slide" data-slide-type="title" data-title="Welcome">
             <h1>Welcome to Vibecoding</h1>
             <p class="subtitle">A Basecamp-Inspired Slide Deck</p>
         </div>
@@ -97,7 +97,262 @@ helloWorld();
             </blockquote>
             <footer>&mdash; Peter Drucker</footer>
         </div>
+
+
+        <!-- ===============================================================
+         +++ +++ +++ +++ Real Content Starts Here. +++ +++ +++ +++ +++
+         =============================================================== -->
+
+        <div class="slide" data-slide-type="title" data-title="Willkommen">
+            <h1>CSS Beyond Breakpoints</h1>
+            <p class="subtitle">Design und Layout ohne Breakpoints, dafür mit modernem CSS</p>
+            <p style="display:flex; gap:1ch; font-style:italic;align-items: center;justify-content: center;">
+                <img height="50" width="50" style="margin-block: 0; border-radius: 50%;" src="https://ca.slack-edge.com/T025QU23Y-U2EQQ36V8-g11ce98f30b2-192" alt="">
+                Thomas Puppe
+            </p>
+        </div>
+
+        <div class="slide" data-slide-type="bullets" data-title="Inhalt">
+            <h2>CSS Beyond Breakpoints</h2>
+            <ul>
+                <li>CSS Vars (mit Breakpoints)
+                    <ul>
+                        <li>Farben</li>
+                        <li>Spacing</li>
+                        <li>Schriften</li>
+                    </ul>
+                </li>
+                <li>Min/Max und Clamping</li>
+                <li>Space Clamping</li>
+                <li>Includes multiple slide layouts</li>
+            </ul>
+        </div>
+
+        <!-- TODO: Slide über mich einbauen, und über ZEIT.de Engineering -->
+
+        <!-- --------------------------------------------------------------
+         Section: CSS Vars
+         -------------------------------------------------------------- -->
+
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+            <h2>CSS Vars: Font Sizes</h2>
+<pre class="fragment"><code class="language-css">
+--zeit-fontsize-s: 1rem;
+--zeit-fontsize-m: 1.25rem;
+--zeit-fontsize-l: 1.5rem;
+
+@include respond-min($break-tablet-min) {
+    --zeit-fontsize-m: 1.5rem;
+    --zeit-fontsize-l: 2rem;
+}
+</code></pre>
+<pre class="fragment"><code class="language-css"></code>
+.zon-teaser h2 {
+    font-size: var(--zeit-fontsize-m);
+}
+
+.zon-teaser--large h2 {
+    font-size: var(--zeit-fontsize-l);
+}
+</code></pre>
+        </div>
+
+
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing">
+            <h2>CSS Vars: Spacing</h2>
+<pre class="fragment"><code class="language-css">--zeit-space-s: 0.5rem;
+--zeit-space-m: 1rem;
+--zeit-space-l: 1.25rem;
+--zeit-space-xl: 2rem;
+
+--zeit-space-gap: var(--zeit-space-m);
+--zeit-space-teaser: var(--zeit-space-xl);
+</code></pre>
+<pre class="fragment"><code class="language-css">@include respond-min($break-tablet-min) {
+    --zeit-space-m: 1.5rem;
+    --zeit-space-l: 2rem;
+    --zeit-space-xxl: 3.5rem;
+}
+</code></pre>
+<pre class="fragment"><code class="language-css">h1 {
+    margin-block: var(--zeit-space-xl);
+}
+h2 {
+    margin-block: var(--zeit-space-l);
+}
+</code></pre>
+
+        <!-- Die Idee ist doch Folgende: 
+         Mit größerem Screen werden die Schriften größer. 
+         Größer werdende Schriften kriegen größer werdendes Spacing.
+         Da könnte man doch auch gut em verwenden. -->
+
+        </div>
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing"></div>
+
+        <pre class="fragment"><code class="language-css">h1, h2 {
+    margin-block: 2em;
+    margin-block: 2lh;
+}
+</code></pre>
+
+        <!-- Viewport Inline, runde auf halbe Zeilenhöhen (lokal) -->
+        <pre class="fragment"><code class="language-css">h1, h2 {
+    margin-block: min(1lh, 2vi);
+    margin-block: round(up, 2vi, 0.5lh);
+}
+</code></pre>
+
+        </div>
+
+        <!-- Bei diesen Werten ist das Design – ich sag mal – nicht mehr vorhersehbar. 
+        Es ist natürlich deterministisch im technischen Sinne. Aber es sieht tatsächlich 
+        auf jedem Device anders aus. ABER: es sieht auf jedem Device gut aus, und stimmig.
+        Es passt zum Device, und es passt zum Umfeld, ergibt einen ruhigen Rhythmus.
+        -->
+
+
+        <!-- --------------------------------------------------------------
+         Section: Responsive/Intrinsic Web Design
+         -------------------------------------------------------------- -->
+
+        <!-- Und hier beginnt es schon kompliziert zu werden, und mich zu nerven. (Hab ne kurze Zündschnur.) -->
+
+        <div class="slide" data-slide-type="quote" data-title="Andy Bell Quote">
+            <blockquote>
+                "Be the browser's mentor, not it's micromanager."
+            </blockquote>
+            <footer>&mdash; Andy Bell</footer>
+        </div>
+
+        <div class="slide" data-slide-type="title" data-title="Responsive/Intrinsic">
+            <h2>Responsives Web Design</h2>
+            <p class="subtitle">↓</p>
+            <h2>Intrinsisches Web Design</h2>
+        </div>
+
+        <!-- Responsive Web Design: Begriff von Etah Marcotte geprägt. 
+         In einem Artikel auf A List Apart im Jahr 2010. Ein Jahr später wurde ein Buch draus.
+         Man musste die steigende Zahl von mobilen geräten bedienen. iPhone ging noch mit 
+         mobilen Versionen von Websites (m.zeit.de) 
+         Layout wurde dann in relativen Werten angebenen ( linke Spalte 70%, rechte Spalte 30%).
+         Damit hielten Media Queries          
+         -->
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <img src="./images/mobil-zeit-de.png" alt="Grayscale random image">
+        </div>
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <video src="./images/responsive-zeit.mov" controls alt="Grayscale random image">
+        </div>
+
+        <!-- --------------------------------------------------------------
+         Section: Font Clamp
+         -------------------------------------------------------------- -->
+
+        <!-- So wie wir vorhin gesagt haben: Ich will nicht unter Überschriften 
+         mal 20 und mal 30 Pixel Whitespace. Sondern _eigentlich_ will ich unter 
+         Überschriften passende Abstände. 
+         So muss man hier festhalten: Ich will nicht bei 767 Pixeln Schriftgröße 20,
+         und bei 768 Pixel Schriftgröße 30. Aber genau das machen wir bei responsivem 
+         Web Design mittels Media Queries. Und das machen wir noch heute in der Regel. -->
+
+        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
+            <h2>Breakpoints für Font Sizes</h2>
+            <div class="image-grid">
+                <img src="./images/font_steps.png" alt="Random image 1" class="fragment">
+                <img src="./images/font_multi_steps.png" alt="Random image 2" class="fragment">
+                <img src="./images/font_many_steps.png" alt="Random image 3" class="fragment">
+                <img src="./images/font_clamp.png" alt="Random image 4" class="fragment">
+            </div>
+        </div>
+
+        <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
+            <h2>Dissecting CSS `clamp()`</h2>
+            <pre><code class="no-highlight">font-size: clamp(<span data-highlight-id="1">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="3">2.5rem</span>);</code></pre>
+            <div class="explanation-container">
+                <div class="fragment" data-explains="1">
+                    <p><strong>Minimum Value:</strong> This is the smallest the font size will ever be. It acts as the lower bound.</p>
+                </div>
+                <div class="fragment" data-explains="2">
+                    <p><strong>Preferred Value:</strong> This is the ideal, flexible value that scales with the viewport width.</p>
+                </div>
+                <div class="fragment" data-explains="3">
+                    <p><strong>Maximum Value:</strong> This is the largest the font size can get, acting as the upper bound.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- TODO: Iframe Lösung mit font clamp() -->
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <iframe src="./iframes/font-clamp.html" styles="resize:both"></iframe>
+        </div>
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+                <iframe 
+                    src="./iframes/font-clamp.html" 
+                    style="width: 100%; height: 100%; border: none; display: block;">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Das meint Andy Bell, wenn er sagt "mentor, not micromanager. Regeln festlegen, aber nicht Schritte. Also Breakpoints. " -->
+
+
+        <!-- TODO: sicherstellen dass die Syntax stimmt -->
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+            <h2>CSS Vars: Font Sizes</h2>
+<pre class="fragment"><code class="language-css">
+    --zeit-fontsize-m: 1.5rem
+
+    --zeit-fontsize-m: clamp(1.25rem, 2vw + 1rem, 5rem);
+    --zeit-fontsize-xl: clamp(2rem, 4vw + 1rem, 6rem);
+    
+    p {
+        font-size: var(--zeit-fontsize-m);
+    }
+    h1 {
+        font-size: var(--zeit-fontsize-xl);
+    }
+</code></pre>
+
+<!-- Und dasselbe kann ich auch mit Spacing machen. -->
+
+<pre class="fragment"><code class="language-css">
+    --zeit-fontsize-m: 1.5rem
+
+    --zeit-fontsize-m: clamp(1.25rem, 2vw + 1rem, 5rem);
+    --zeit-fontsize-xl: clamp(2rem, 4vw + 1rem, 6rem);
+    
+    p {
+        font-size: var(--zeit-fontsize-m);
+    }
+    h1 {
+        font-size: var(--zeit-fontsize-xl);
+    }
+</code></pre>
+        </div>
+
     </div>
+
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+                <iframe 
+                    src="./iframes/color-clamp.html" 
+                    style="width: 100%; height: 100%; border: none; display: block;">
+                </iframe>
+            </div>
+        </div>
+
+
+        <!-- OUT OF SCOPE: -->
+        <!-- Idee: CSS Vars für Grid Areas usw ... will ich das mit reinmengen? 
+         Oder ist das so ein Deep Dive, der von meinem Thema ablenkt? -->
+
 
     <!-- UI Elements -->
     <div class="slide-counter"></div>
