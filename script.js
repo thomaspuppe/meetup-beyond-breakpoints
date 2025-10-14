@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.slide');
     const slideCounter = document.querySelector('.slide-counter');
     const progressBar = document.querySelector('.progress-bar');
-    const fullscreenHint = document.querySelector('.fullscreen-hint');
+    // const fullscreenHint = document.querySelector('.fullscreen-hint');
     const tocOverlay = document.querySelector('.toc-overlay');
     const tocList = document.getElementById('toc-list');
     const gridOverlay = document.querySelector('.grid-overlay');
@@ -222,11 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Click/Tap navigation
+    /*
     document.addEventListener('click', (e) => {
         // Don't navigate if clicking on interactive elements
         if (e.target.closest('a, button, .toc-overlay, .fullscreen-hint')) return;
         nextSlide();
     });
+    */
 
     // Swipe navigation
     let touchstartX = 0;
@@ -251,10 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Fullscreen hint
+    /*
     fullscreenHint.addEventListener('click', (e) => {
         e.stopPropagation();
         fullscreenHint.style.display = 'none';
     });
+    */
     
     // Table of Contents
     function buildTOC() {

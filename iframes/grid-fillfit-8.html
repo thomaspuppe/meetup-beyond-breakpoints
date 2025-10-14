@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Grid Fill/Fit</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+    .grid {
+        display: grid;
+        gap: 1rem;
+        margin-block: 2rem;
+    }
+    .grid--auto-fit {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .grid--auto-fill {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .grid > div {
+        border: 1px blue dotted;
+        padding: 1rem;
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="grid grid--auto-fill">
+        <div>ONE</div>
+        <div>TWO</div>
+        <div>THREE</div>
+        <div>FOUR</div>
+        <div>FIVE</div>
+        <div>SIX</div>
+        <div>SEVEN</div>
+        <div>EIGHT</div>
+    </div>
+
+</body>
+</html>
