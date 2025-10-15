@@ -164,7 +164,7 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
             </ul>
         </div>
 
-        <!--
+        <!-- 0910
         Und davon handelt mein heutiger Talk. CSS beyond Breakpoints.
         Wie überwinden wir das, was ich vor 15 Jahren gelernt habe im Zuge von Responsive Web Design, Mobile First, viel mit Breakpoints.
         Und welche moderneren Sachen gibt es da?
@@ -245,7 +245,7 @@ body {
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
             <p>CSS Vars: Colors</p>
             <h2>Wartbarkeit 🦄</h2>
-<!-- TODO: prüfen ob das wirklich geht -->
+<!-- TODO: prüfen ob das wirklich geht / TODO: das weglassen?? !!--> 
 <pre><code class="language-css">
 :root {
     color-scheme: light dark;
@@ -308,7 +308,7 @@ Wenn jetzt ein Design kommt, das eine andere Kombination will (mobil die S und a
             </div>
         </div>
 
-<!--
+<!-- 0915
 Das Ergebnis sehen wir hier. Ganz klassisch. Kleine Schrift, und ab einem Breakpoint wird sie größer.
 Das ist ganz cool. Aber: irgendwie unbefriedigend an manchen Stellen. 
 Kurz vor dem Breakpoint ist die Schrift etwas verloren. Und kurz danach etwas zu groß vielleicht.
@@ -324,8 +324,8 @@ Kurz vor dem Breakpoint ist die Schrift etwas verloren. Und kurz danach etwas zu
         </div>
 <!--
 Jetzt könnte ich natürlich in kleineren Schritten vorgehen.
-Das wird natürlich unhandlich. Aber es führt uns zu riner spannenden Frage:
-
+Das wird natürlich unhandlich. Aber es führt uns zu einer spannenden Frage:
+TODO: Frage über die Grafik legen!
 -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
@@ -352,6 +352,7 @@ Ich will, dass sich die Schrift dem Bildschirm anpasst. Proportional. Also quasi
 
 <!-- 
 Und genau das erreichen wir mit bildschirm-relationalen Einheiten, und mit clamp.
+TODO; Browser Setting Screenshot
 -->
 
         <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
@@ -397,9 +398,7 @@ Und genau das erreichen wir mit bildschirm-relationalen Einheiten, und mit clamp
             </div>
         </div>
 
-
 <!-- TODO: Utopia Tool verlinken-->
-
 
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing">
             <p>CSS Vars: Spacing</p>
@@ -415,6 +414,9 @@ h1 {
 }
 h2 {
     margin-block: var(--zeit-space-l);
+}
+p {
+    margin-block: var(--zeit-space-s);
 }
 </code></pre>
 </div>
@@ -460,7 +462,7 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
 
 </div>
 
-        <!-- 
+        <!-- 0922
         Min() und Round() sind zwei weitere arithmetische Funktionen in CSS.
         vi und round auf lh sind typische relative Einheiten.
         ch für character, cap für Größe des Capital Letters
@@ -484,6 +486,7 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         </div>
 
         <!-- 
+        TODO: Wer ist / was macht Andy Bell?
         Regeln und Leitplanken festlegen, kein Pixeldesign. 
         Bei diesen Werten ist das Design – ich sag mal – nicht mehr vorhersehbar. 
         Es ist natürlich deterministisch im technischen Sinne. Allerdings sieht es tatsächlich 
@@ -496,26 +499,10 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
             <img src="./images/question_breakpoints.png" alt="Grayscale random image" />
         </div>
 
-<!--
+<!-- 0925
 Und hier kommt der Witz: diese Prinzipien funktionieren nicht nur für Spacing und Schriftgrößen.
 Sondern auch für Layouts!
 -->
-
-
-
-        <div class="slide" data-slide-type="title" data-title="Responsive/Intrinsic">
-            <h2>Responsives Web Design</h2>
-            <p class="subtitle">↓</p>
-            <h2>Intrinsisches Web Design</h2>
-        </div>
-
-        <!-- Responsive Web Design: Begriff von Etah Marcotte geprägt. 
-         In einem Artikel auf A List Apart im Jahr 2010. Ein Jahr später wurde ein Buch draus.
-         Man musste die steigende Zahl von mobilen Geräten bedienen. 
-         Anfangs gab es noch m.zeit.de , oder mobil.spiegel.de .
-         Aber später mit mehr Devices, mehr Verbreitung, und spätestens mit Tablets,
-         habe sich Breakpoints durchgesetzt.
-        -->
 
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
             <h2>Breakpoints 🦣</h2>
@@ -618,8 +605,19 @@ Sondern auch für Layouts!
             </div>
         </div>
 
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+            <h2>Container Query und Container-Inline-Size 🦄</h2>
+<pre><code class="language-css">.grid > div {
+    container-type: inline-size;
+}
+.grid > div > span {
+    font-size: 5cqi;
+}
+</code></pre>
+        </div>
 
          <!-- 
+        Hier drin kann ich übrigens die Schrift wieder abhängig von der Containerbreite machen.
         Und _dieses_ prinzp kann man sich zunutze machen, wenn man nicht weiß, wie viele Inhalte es gibt.
         Zum Beispiel bei den Teasern der ZEIT.
         -->
@@ -657,14 +655,63 @@ Sondern auch für Layouts!
         </div>
 
 
-<!-- NEXT HERE -->
+<!-- 0933, ZEIT OVER!!
+        TODO: unser CSS beschreiben -->
 
 
+        <div class="slide" data-slide-type="title" data-title="Willkommen">
+            <h1 style="margin-bottom:1.5em;">CSS Beyond Breakpoints</h1>
+            <p class="subtitle">Fazit</p>
+        </div>
+
+        <!--
+        Was wir gerade gesehen haben, ist komplexer und schwieriger zu verstehen, als traditionelles CSS mit Breakpoints.
+        Man braucht dafür ein tiefes Verständnis der Technologie und des Systems, das hinter dem Design steckt.
+        Dafür ist das Ergebnis flexibel – was Inhalte und Devices angeht.
+         -->
 
 
+        <div class="slide" data-slide-type="title" data-title="Responsive/Intrinsic">
+            <h1 style="margin-bottom:1.5em;">CSS Beyond Breakpoints</h1>
+            <h2>Responsives Web Design</h2>
+            <p class="subtitle">↓</p>
+            <h2>Intrinsisches Web Design</h2>
+        </div>
+
+        <!-- Responsive Web Design: Begriff von Etah Marcotte geprägt. 
+         In einem Artikel auf A List Apart im Jahr 2010. Ein Jahr später wurde ein Buch draus.
+         Man musste die steigende Zahl von mobilen Geräten bedienen. 
+         Anfangs gab es noch m.zeit.de , oder mobil.spiegel.de .
+         Aber später mit mehr Devices, mehr Verbreitung, und spätestens mit Tablets,
+         habe sich Breakpoints durchgesetzt.
+         TODO: Schöne griffige Erklärung, und Hinweis um das zu googlen.
+        -->
 
 
+        <div class="slide" data-slide-type="quote" data-title="Andy Bell Quote">
+            <blockquote>
+                "Be the browser's mentor, <br>not it's micromanager."
+            </blockquote>
+            <footer>&mdash; Andy Bell</footer>
+        </div>
 
+        <!--
+        Es ist nicht der intuitiv leichte Weg – aber der, der die Stärken des Browsers nutzt, 
+        Standards einsetzt, und damit einen nachhaltigen Weg geht. 
+        Genau die Idee des Lean Web, die ich so schätze.
+        Diese Ansätze überleben jedes Framework, jede neue Major Version von Tailwind.
+        Das ist performant und accessible. 
+        Es geht auf User Settings ein. Zum Beispiel bezüglich der Schriftgröße.
+        Damit ist das Web nicht für alle identisch. Aber es ist für alle gut und schön.
+         -->
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <img src="./images/question.png" alt="Grayscale random image" />
+        </div>
+
+        <!-- 
+        Und wenn ihr mich fragt: das ist das Web, das ich eigentlich will.
+        -->
 
 
 
@@ -707,18 +754,11 @@ Sondern auch für Layouts!
             Aber für unbekannte Inhalte und Devices spielt es voll seine Stärken aus.
          -->
 
-<!-- TODO: Beispiel mit unserem Ausgabenarchiv-Grid -->
-
 
 
 
 
 </div>
-
-        <!-- OUT OF SCOPE: -->
-        <!-- Idee: CSS Vars für Grid Areas usw ... will ich das mit reinmengen? 
-         Oder ist das so ein Deep Dive, der von meinem Thema ablenkt? -->
-
 
     <!-- UI Elements -->
     <div class="slide-counter"></div>

@@ -21,22 +21,26 @@
     .grid > div {
         border: 1px blue dotted;
         padding: 1rem;
+        container-type: inline-size;
+    }
+    .grid > div > span {
+        font-size: 5cqi;
     }
     </style>
 </head>
 <body>
     <h2>auto-fill</h2>
     <div class="grid grid--auto-fill">
-        <div>ONE</div>
-        <div>TWO</div>
-        <div>THREE</div>
+        <div><span>ONE</span></div>
+        <div><span>TWO</span></div>
+        <div><span>THREE</span></div>
     </div>
 
     <h2>auto-fit</h2>
     <div class="grid grid--auto-fit">
-        <div>ONE</div>
-        <div>TWO</div>
-        <div>THREE</div>
+        <div><span>ONE</span></div>
+        <div><span>TWO</span></div>
+        <div><span>THREE</span></div>
     </div>
 
 </body>
