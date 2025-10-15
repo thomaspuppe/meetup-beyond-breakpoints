@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibecoding Slide Deck</title>
+    <title>CSS Beyond Breakpoints</title>
     <link rel="stylesheet" href="vendor/prism/prism.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,7 +19,7 @@
             <h1>CSS Beyond Breakpoints</h1>
             <p class="subtitle">Design und Layout ohne Breakpoints, dafür mit modernem CSS</p>
             <p style="display:flex; gap:1ch; font-style:italic;align-items: center;justify-content: center;">
-                <img height="50" width="50" style="margin-block: 0; border-radius: 50%;" src="https://ca.slack-edge.com/T025QU23Y-U2EQQ36V8-g11ce98f30b2-192" alt="">
+                <img height="50" width="50" style="margin-block: 0; border-radius: 50%;" src="images/toy-face.png" alt="">
                 Thomas Puppe
             </p>
         </div>
@@ -28,14 +28,13 @@ Guten Abend. Ich möchte mit euch über CSS sprechen. (Also erstmal zu euch, und
 Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
 -->
 
-        <!-- TODO: Layout Typ wie im anderen nachbauen-->
         <div class="slide" data-slide-type="title" data-title="Willkommen 2">
             <h1>Hi, ich bin Thomas 👋</h1>
-                <img data-src="images/intro/toy-face.png" width="300px"/>
-                <div>								
-                    <p>Senior Frontend Developer <br>bei ZEIT Online</p>
+                <img src="images/toy-face.png" width="300px"/>
+                <h2>								
+                    <p>Senior Frontend Developer <br>bei der ZEIT</p>
                     <em>#a11y, #leanweb, #webperf</em>
-                </div>
+                </h2>
         </div>
 
         <!--
@@ -44,9 +43,12 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
         Damit passe ich ganz gut zu ZEIT. (Formerly ZEIT Online.)
         -->
 
-        <!-- TODO: Layout Typ wie im anderen nachbauen, Screenshots rein. -->
         <div class="slide" data-slide-type="title" data-title="Willkommen 3">
             <h1>zeit.de</h1>
+            <div class="r-hstack" style="gap:5vw">
+                <img src="images/zeit_screenshot-1.png" style="width:min(100%, 35vw)"/>
+                <img src="images/zeit_screenshot-2.png" style="width:min(100%, 35vw)"/>
+            </div>
         </div>
 
         <!--
@@ -57,26 +59,17 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
         Also dass man sich lieber auf den Browser verlässt, und dessen Fähigkeiten nutzt, anstatt das Rad selber neu zu erfinden.
         -->
 
-        <div class="slide" data-slide-type="bullets" data-title="Inhalt">
-            <h2>CSS Beyond Breakpoints</h2>
-            <ul>
-                <li>CSS Vars (mit Breakpoints)
-                    <ul>
-                        <li>Farben, Spacing, Schriften</li>
-                    </ul>
-                </li>
-                <li>Min/Max und Clamping</li>
-                <li>Space Clamping</li>
-                <li>Includes multiple slide layouts</li>
-                <!-- TODO -->
-            </ul>
+        <div class="slide" data-slide-type="title" data-title="Willkommen">
+            <h1>CSS Beyond Breakpoints</h1>
+            <p class="subtitle">Design und Layout ohne Breakpoints, dafür mit modernem CSS.</p>
         </div>
 
         <!-- 0910
         Und davon handelt mein heutiger Talk. CSS beyond Breakpoints.
         Wie überwinden wir das, was ich vor 15 Jahren gelernt habe im Zuge von Responsive Web Design, Mobile First, viel mit Breakpoints.
         Und welche moderneren Sachen gibt es da?
-        Als erstes spreche ich doch noch über Breakpoints, quasi als Hinführung. Und dann ... TODO
+        Als erstes spreche ich doch noch über Breakpoints, quasi als Hinführung. 
+        Und dann werden wir die los.
         -->
 
         <!-- --------------------------------------------------------------
@@ -125,9 +118,8 @@ body {
 </code></pre>
         </div>
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
-            <p>CSS Vars: Colors</p>
+            <p>CSS Vars: Colors mit CSS Functions</p>
             <h2>Dark Mode mit light-dark() 🦄</h2>
-<!-- TODO: prüfen ob das wirklich geht -->
 <pre><code class="language-css">
 :root {
     color-scheme: light dark;
@@ -148,29 +140,8 @@ body {
         Für ein konsistentes Design und eine wartbare Seite sind die gold wert!
         Ich will auf keinen Fall an irgendwelchen Texten, Teasern, Footerbars, was-auch-immer mit Farbwerten hantieren, sondern mit Variablen. 
         Die sind an einer Stelle definiert – damit habe ich auch gleich mein Inventar in Form von Design Tokens – und werden dann im Projekt nur noch genutzt.
-        -->
+        Wenn ich die wirklich mal überschreiben will/muss, kann ich das immer noch lokal an meiner Komponente tun.
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
-            <p>CSS Vars: Colors</p>
-            <h2>Wartbarkeit 🦄</h2>
-<!-- TODO: prüfen ob das wirklich geht / TODO: das weglassen?? !!--> 
-<pre><code class="language-css">
-:root {
-    color-scheme: light dark;
-    --z-ds-color-text-100: light-dark(#252525, #fff); // Primary Information
-}
-body {
-    color: var(--z-ds-color-text-100);
-}
-
-.teaser--verlagsangebot {
-    --z-ds-color-text-100: light-dark(#353535, #eee);
-}
-</code></pre>
-        </div>
-
-
-        <!--
         So wie ich Farben im CSS als globale Design Tokens definiere, und dann nur noch benutze, so gehe ich auch mit Schriftgrößen um.
         -->
 
@@ -181,8 +152,7 @@ body {
 --zeit-fontsize-m: 1.25rem;
 --zeit-fontsize-l: 1.5rem;
 
-// TODO: @media (min-width: 600px)
-@include respond-min($break-tablet-min) {
+@media (min-width: 600px) {
     --zeit-fontsize-m: 1.5rem;
     --zeit-fontsize-l: 2rem;
 }
@@ -198,17 +168,14 @@ body {
 </code></pre>
         </div>
 
-
 <!--
 Ich hab schonmal den Teil übersprungen, der vorhin als schlechtes Beispiel galt: 
 Auf gar keinen Fall will ich innerhalb meines Teaser-Designs mit Breakpoints hantieren.
 Ich habe ein Set an Schriftgrößen, die sind untereinander austariert, und mit denen arbeite ich.
-Wenn jetzt ein Design kommt, das eine andere Kombination will (mobil die S und auf Desktop die M), dann hab ich ... TODO
 -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <!-- TODO: Iframe so ein bisschen Device-like nen Rahmen geben.-->
-            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+            <div class="iframe-device">
                 <iframe 
                     src="./iframes/font-breakpoint.html" 
                     style="width: 100%; height: 100%; border: none; display: block;">
@@ -225,60 +192,64 @@ Kurz vor dem Breakpoint ist die Schrift etwas verloren. Und kurz danach etwas zu
         <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
             <h2>Breakpoints für Font Sizes</h2>
             <div class="image-grid">
-                <img src="./images/font_steps.png" alt="Random image 1" class="fragment">
-                <img src="./images/font_multi_steps.png" alt="Random image 2" class="fragment">
-                <img src="./images/font_many_steps.png" alt="Random image 3" class="fragment">
+                <img src="./images/font_steps.png" alt="" class="fragment">
+                <img src="./images/font_multi_steps.png" alt="" class="fragment">
+                <img src="./images/font_many_steps.png" alt="" class="fragment">
             </div>
         </div>
 <!--
 Jetzt könnte ich natürlich in kleineren Schritten vorgehen.
 Das wird natürlich unhandlich. Aber es führt uns zu einer spannenden Frage:
-TODO: Frage über die Grafik legen!
 -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <img src="./images/question.png" alt="Grayscale random image">
+            <img src="./images/question.png" alt="">
         </div>
 
 <!--
-Aber mein Kollege Moritz hat so ein geflügeltes Wort geprägt: Die Frage "Was will ich _eigentlich_ erreichen?"
-Ich will nicht bei 767 Pixeln Schriftgröße 20, und bei 768 Pixel Schriftgröße 30. 
+Die Frage lautet: "Was will ich _eigentlich_ erreichen?"
+Ich will nicht bei 767 Pixeln Schriftgröße 20, und bei 768 Pixelm Schriftgröße 30. 
 Aber genau das machen wir bei responsivem Web Design mittels Media Queries.
-Ich will, dass sich die Schrift dem Bildschirm anpasst. Proportional. Also quasi sowas:
+Was ich eigentlich will, ist, dass sich die Schrift dem Bildschirm anpasst. Proportional. Also quasi sowas:
 -->
 
 
         <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
             <h2>Breakpoints für Font Sizes</h2>
             <div class="image-grid">
-                <img src="./images/font_steps.png" alt="Random image 1">
-                <img src="./images/font_multi_steps.png" alt="Random image 2">
-                <img src="./images/font_many_steps.png" alt="Random image 3">
-                <img src="./images/font_clamp.png" alt="Random image 4">
+                <img src="./images/font_steps.png" alt="">
+                <img src="./images/font_multi_steps.png" alt="">
+                <img src="./images/font_many_steps.png" alt="">
+                <img src="./images/font_clamp.png" alt="">
             </div>
         </div>
 
 <!-- 
 Und genau das erreichen wir mit bildschirm-relationalen Einheiten, und mit clamp.
-TODO; Browser Setting Screenshot
 -->
 
         <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
             <h2>CSS `clamp()` 🦄</h2>
-            <pre><code class="no-highlight">font-size: clamp(<span data-highlight-id="1">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="3">2.5rem</span>);</code></pre>
+            <pre><code class="no-highlight">font-size: <span data-highlight-id="1">clamp</span>(<span data-highlight-id="3">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="4">2.5rem</span>);</code></pre>
             <div class="explanation-container">
                 <div class="fragment" data-explains="1">
-                    <p><strong>Minimum Value:</strong> This is the smallest the font size will ever be. It acts as the lower bound.</p>
+                    <p><strong>clamp():</strong> Mathematische CSS-Funktion mit sehr gutem Browser-Support.</p>
                 </div>
                 <div class="fragment" data-explains="2">
-                    <p><strong>Preferred Value:</strong> This is the ideal, flexible value that scales with the viewport width.</p>
+                    <p><strong>Bevorzugter Wert:</strong> Idealer Wert der Schriftgröße. Wächst mit dem Bildschirm (2vw) und berücksichtigt die User-Einstellungen (1rem).</p>
                 </div>
                 <div class="fragment" data-explains="3">
-                    <p><strong>Maximum Value:</strong> This is the largest the font size can get, acting as the upper bound.</p>
+                    <p><strong>Minimaler Wert:</strong> Untere Grenze. Wird genommen, wenn der ideale Wert drunter fällt.</p>
+                </div>
+                <div class="fragment" data-explains="4">
+                    <p><strong>Maximaler Wert:</strong> Obere Grenze. Wird genommen, wenn der ideale Wert größer ist.</p>
                 </div>
             </div>
         </div>
 
+<!-- 
+Das Ergebnis in meinem CSS File für Design System Tokens ist dann so etwas hier:
+-->
 
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
             <p>CSS Vars: Font Sizes</p>
@@ -297,8 +268,12 @@ TODO; Browser Setting Screenshot
 </code></pre>
 </div>
 
+<!-- 
+Und so sieht das aus:
+-->
+
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+            <div class="iframe-device">
                 <iframe 
                     src="./iframes/font-clamp.html" 
                     style="width: 100%; height: 100%; border: none; display: block;">
@@ -306,7 +281,22 @@ TODO; Browser Setting Screenshot
             </div>
         </div>
 
-<!-- TODO: Utopia Tool verlinken-->
+
+        <div class="slide" data-slide-type="title" data-title="Willkommen 2">
+
+                <img src="images/utopia.png" width="90%"/>
+                <h2>								
+                    <a href="https://utopia.fyi">https://utopia.fyi</a>
+                </h2>
+        </div>
+
+<!-- 
+Es gibt ein wunderschönen Tool, mit dem ihr euch diese Schriftgrößen samt Berechnungsfaktoren und Grenzen generieren könnt.
+Ihr gebt eure paar Werte ein, sagt wie viele Schriftgrößen ihr haben wollt, und er macht die Interpolation.
+
+Apropos Werte und Interpolation ... mit Clamp berechnen wir ja Größen-Einheiten.
+Und die kann ich natürlich nicht nur für Schriftgrößen nehmen, sondern auch für mein Whitespace System.
+-->
 
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing">
             <p>CSS Vars: Spacing</p>
@@ -329,20 +319,23 @@ p {
 </code></pre>
 </div>
 
-<!-- TODO: Utopia Tool verlinken. Hier, oder woanders?? Als Zwischenfolie vielleicht?? -->
-
 <!--
+Minimalwerte, Skalierung mit Bildschirm, Maximalwerte.
+Ich hab jetzt hier nur Text-Elemente und ihr Margin genommen.
+Das setzen wir aber natürlich auch für Grid-Gaps ein. Für Abstände zwischen Komponenten.
+Aber für das Schriften-Beispiel gilt:
 Bei Paragraphs setzen wir das kleinere Spacing ein, bei Überschriften das größere.
 Jetzt kann man sich fragen ... 
 -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <img src="./images/question.png" alt="Grayscale random image" />
+            <img src="./images/question.png" alt="" />
         </div>
 
 <!--
 Was will ich eigentlich?
-Ich will nicht 20px unter Absätzen, und 30 Pixel unter Überschriften. Sondern ich will, dass goßer Text mehr Spacing hat als kleiner Text.
+Ich will nicht 20px unter Absätzen, und 30 Pixel unter Überschriften. 
+Sondern ich will, dass goßer Text mehr Spacing hat als kleiner Text.
 Dafür gibt es schriftrelatve Einheiten in CSS! 
 -->
 
@@ -355,8 +348,8 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
 
         <!-- Viewport Inline(!), runde auf halbe Zeilenhöhen (lokal) -->
     <pre class="fragment"><code class="language-css">h1, h2 {
-    margin-block: min(1lh, 2vi);
-    margin-block: round(up, 2vb, 0.5lh);
+    margin-inline: min(5ch, 2vi);
+    margin-block: round(up, 2vb, 1lh);
 }</code></pre>
 
 <pre class="fragment"><code class="language-css">@supports (font-size: 1cqi) {
@@ -374,8 +367,15 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         Min() und Round() sind zwei weitere arithmetische Funktionen in CSS.
         vi und round auf lh sind typische relative Einheiten.
         ch für character, cap für Größe des Capital Letters
-        .Oder COntainer Queries. Mach Zeug abhängig von der Größe des Containers.
+        .Oder Container Queries. Mach Zeug abhängig von der Größe des Containers.
+        Und jetzt kommt ein wichtiger Rat: 
+        -->
 
+        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+            <img src="./images/dinos-discuss.png" alt="" />
+        </div>
+
+        <!--
         Sprecht mal mit euren Designer:innen über solche Regeln. Wenn ihr ganz viel Glück habt, 
         haben die sich vielleicht was dabei gedacht, als sie die Werte festgelegt haben. 
         Sowas wie ein System. Fürs Design.
@@ -383,7 +383,11 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         Nur dass im Figma eben die Snapshots landen von zwei, drei festen Größen.
         
         Und wir als Entwickler:innen nehmen das als feste Größen pro Breakpoint.
-        Weil uns die gemeinsame Sprache fehlt für die Welt zwischen den Designs.
+        Weil uns die gemeinsame Sprache fehlt für die Welt zwischen den Breakpoint-Designs.
+
+        Und dabei geht es nicht darum, die Dinge kompliziert aufzuschreiben mit Container Queries und Character Size Units.
+        Sondern darum, sie nur einmal aufzuschreiben. Zum Beispiel den Abstand zwischen Headlines und egal-was-drumherum-ist.
+        Und egal, ob es die Headline in der Hero Kachel oder in den AGB ist.
         -->
 
         <div class="slide" data-slide-type="quote" data-title="Andy Bell Quote">
@@ -394,20 +398,31 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         </div>
 
         <!-- 
-        TODO: Wer ist / was macht Andy Bell?
-        Regeln und Leitplanken festlegen, kein Pixeldesign. 
+        Es gibt einen schönen Satz: Be the Browsers Mentor, not it's micromanager.
+
+        Der stammt von Andy Bell – Das ist nicht der gleichnamige Sänger von der Band Erasure. 
+        Sondern ein Designer und Frontend Developer aus dem Vereinigten Königreich.
+
+        Regeln und Leitplanken festlegen, kein Pixeldesign.
+
         Bei diesen Werten ist das Design – ich sag mal – nicht mehr vorhersehbar. 
-        Es ist natürlich deterministisch im technischen Sinne. Allerdings sieht es tatsächlich 
-        auf jedem Device anders aus. ABER: es sieht auf jedem Device gut aus, und stimmig.
-        Es passt zum Device, und es passt zum Umfeld, ergibt einen ruhigen Rhythmus.
+        Es ist natürlich deterministisch im technischen Sinne. 
+        Allerdings sieht es tatsächlich auf jedem Device anders aus.
+
+        Keine Ahnung, wie die ZEIT auf dem Galaxy Tablet meiner Mutter mit 127% Schrift-Zoom aussieht.
+        Ist mir auch egal. Ich weiß aber, dass sie gut aussieht, und lesbar, und stimmig.
+
+        Es geht auf Device-Größen ein (Viewport/Container units), 
+        und auf die User Settings (rem), 
+        und hat einen guten Rythmus (System, Rundung auf Line Heights).
         -->
 
 
-        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
-            <img src="./images/question_breakpoints.png" alt="Grayscale random image" />
-        </div>
+        <!--div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+            <img src="./images/question_breakpoints.png" alt="" />
+        </div-->
 
-<!-- 0925
+<!-- 
 Und hier kommt der Witz: diese Prinzipien funktionieren nicht nur für Spacing und Schriftgrößen.
 Sondern auch für Layouts!
 -->
@@ -418,13 +433,13 @@ Sondern auch für Layouts!
 .container > * {
     width: 100%;
 }
-</code></pre>
-<pre class="fragment"><code class="language-css">@media (min-width: 600px) {
+
+@media (min-width: 600px) {
     width: 45%;
     margin: 5%;
 }
-</code></pre>
-<pre class="fragment"><code class="language-css">@media (min-width: 900px) {
+
+@media (min-width: 900px) {
     width: 30%;
     margin: 3%;
 }
@@ -437,15 +452,6 @@ Sondern auch für Layouts!
         Aber wenn es dann noch größer wird, und eigentlich drei Spalten passen würden ... 
         oder das abhängig davon ist, ob es überhaupt Inhalt für drei Spalte gibt, 
         da wird es dann komplex. 
-        -->
-
-        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
-            <img src="./images/grid_dinoshop.png" alt="Grayscale random image" />
-        </div>
-
-        <!--
-        Nehmen wir einen Shop. Das Paradebeispiel für CSS-Grids.
-        Lasst euch jetzt nicht von den Dinosaurier Chicken Nugget Plushies ablenken.
         -->
 
         <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
@@ -467,18 +473,32 @@ Sondern auch für Layouts!
         </div>
 
         <!--
+        Deshalb benutzen wir alle CSS Grids. Bei denen wir die Zahl der Columns festlegen können.
+        -->
+
+        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+            <img src="./images/grid_dinoshop.png" alt="" />
+        </div>
+
+        <!--
+        Ein Paradebeispiel für CSS-Grids sind Galerien, oder Produkt-Ansichten in Shops.
+        Lasst euch jetzt nicht von den Dinosaurier Chicken Nugget Plushies ablenken.
+
         Spannend wird es bei der Frage, ob es überhaupt drei Elemente gibt. 
         Oder wenn wenn 4 bis 100 sind, dann muss ich das hier ja über 900 Pixel hinaus 
         bis zu meinem maximalen Breakpoint durchdeklinieren.
          -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <img src="./images/question.png" alt="Grayscale random image" />
+            <img src="./images/question.png" alt="" />
         </div>
 
         <!--
-        Was will ich _eigentlich_? Ich will dass die Produkte den Platz einnehmen, den sie haben.
-        Sei es der Screen, oder eine sinnvolle Leitplanke von 2000 Pixeln.
+        Es stellt sich wieder die Frage: Was will ich _eigentlich_ erreichen? 
+        Ich will dass die Produkte den Platz einnehmen, den sie zur Verfügung haben.
+        Sei es der Screen, oder eine sinnvolle Leitplanke von 2000 Pixeln. 
+        Oder der Container in der Sidebar.
+
         Und da drin sollen die Elemente nicht zu groß sein und nicht zu klein.
         Genau das kann ich mit modernem CSS ausdrücken.
          -->
@@ -489,14 +509,14 @@ Sondern auch für Layouts!
 .product-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  gap: 2rem;
 }
 
 </code></pre>
         </div>
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+            <div class="iframe-device">
                 <iframe 
                     src="./iframes/grid-fillfit-8.html" 
                     style="width: 100%; height: 100%; border: none; display: block;">
@@ -505,7 +525,7 @@ Sondern auch für Layouts!
         </div>
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
+            <div class="iframe-device">
                 <iframe 
                     src="./iframes/grid-fillfit-3.html" 
                     style="width: 100%; height: 100%; border: none; display: block;">
@@ -513,7 +533,19 @@ Sondern auch für Layouts!
             </div>
         </div>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+
+        <!--
+        Wenn es _weniger_ Elemente sind, als Platz zur Verfügung steht, dann kann ich mir aussuchen,
+        ob ich den freien Platz ausfülle. Oder ob die Elemente sich so verhalten als gäbe es noch welche.
+
+        Hier _drin_ kann ich dann übrigens die Schrift wieder abhängig von der Containerbreite machen.
+
+        Und spätestens hier steigt die alte Denke via Breakpoints spätestens aus. 
+        Um das beides zu erreichen, müsste ich ein Kreuzprodukt aus Breakpoints und 
+        dem Zählen der Elemente per JS oder serverseitig machen.
+         -->
+
+        <!--div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
             <h2>Container Query und Container-Inline-Size 🦄</h2>
 <pre><code class="language-css">.grid > div {
     container-type: inline-size;
@@ -522,18 +554,17 @@ Sondern auch für Layouts!
     font-size: 5cqi;
 }
 </code></pre>
-        </div>
+        </div-->
 
          <!-- 
-        Hier drin kann ich übrigens die Schrift wieder abhängig von der Containerbreite machen.
-        Und _dieses_ prinzp kann man sich zunutze machen, wenn man nicht weiß, wie viele Inhalte es gibt.
+        _Dieses_ Prinzp aus auto-fit und minmax usw kann man sich zunutze machen, wenn man nicht weiß, wie viele Inhalte es gibt.
         Zum Beispiel bei den Teasern der ZEIT.
         -->
 
         <div class="slide" data-title="Inspirational Image">
-            <div class="r-hstack">
-                <img src="./images/grid_zeit-teaser_mobil.png" alt="Grayscale random image" style="max-width:50%;max-height:40%;" />
-                <img src="./images/grid_zeit-teaser_desktop.png" alt="Grayscale random image" style="max-width:60%;max-height:80%;"/>
+            <div class="r-hstack" style="gap:5vw">
+                <img src="./images/grid_zeit-teaser_mobil.png" alt="" style="max-width:50%;max-height:40%;" />
+                <img src="./images/grid_zeit-teaser_desktop.png" alt="" style="max-width:60%;max-height:80%;"/>
             </div>
         </div>
 
@@ -541,7 +572,6 @@ Sondern auch für Layouts!
         Die manchmal ein Bild haben und manchmal nicht. 
         (Weil es keins gibt, weil die Eilmeldung raus muss bevor es Bildmaterial gibt, oder weil Bildrechte abgelaufen sind.)
          -->
-
 
                 <!-- Beispiel mit unserem Teaser. -->
         <div class="slide" data-slide-type="code" data-title="Teaser bei ZEIT">
@@ -558,13 +588,22 @@ Sondern auch für Layouts!
 		auto-fit,
 		minmax(min(100%, var(--teaser-column-auto-width)), 1fr)
 	);
+
     // see https://kulturbanause.de/blog/css-grid-auto-fill-responsive-layouts-ohne-media-queries/
 </code></pre>
         </div>
 
 
-<!-- 0933, ZEIT OVER!!
-        TODO: unser CSS beschreiben -->
+        <!-- 
+        Wir setzen uns eine Variable für die Breite, die ein Teaser-Element idealerweise haben soll.
+        Das müssen wir in dem Fall tun, weil andere Teile der Seite noch klassische Breakpoints haben.
+        Wir sagen, dass das Element Bildschirm/Containerbreit sein soll (min aus 100 und var), oder nebeneinander laufen (1fr).
+        Und auto-fit sorgt dafür, dass der Text auch den Platz des Bildes einnimmt, wenn keines da ist.
+        Und der Fließtext hat nnoch eine maximale Breite für die Lesbarkeit.
+
+        Damit reagiert der Teaser auf sein Umfeld – und zwar nicht nur auf verschiedene Screens.
+        Sondern er ist auch in verschiedenen Layouts einsetzbar. Zweispaltig, dreispaltig, Karusselle, you name it.
+         -->
 
 
         <div class="slide" data-slide-type="title" data-title="Willkommen">
@@ -573,11 +612,11 @@ Sondern auch für Layouts!
         </div>
 
         <!--
-        Was wir gerade gesehen haben, ist komplexer und schwieriger zu verstehen, als traditionelles CSS mit Breakpoints.
-        Man braucht dafür ein tiefes Verständnis der Technologie und des Systems, das hinter dem Design steckt.
+        Was wir gerade gesehen haben – Clamp, font-relative Units, CSS Arithmetik, Auto Grid – 
+        ist komplexer und schwieriger zu verstehen, als traditionelles CSS mit Breakpoints.
+        Man braucht dafür ein gutes Verständnis der Technologie und des Systems, das hinter dem Design steckt.
         Dafür ist das Ergebnis flexibel – was Inhalte und Devices angeht.
          -->
-
 
         <div class="slide" data-slide-type="title" data-title="Responsive/Intrinsic">
             <h1 style="margin-bottom:1.5em;">CSS Beyond Breakpoints</h1>
@@ -586,15 +625,10 @@ Sondern auch für Layouts!
             <h2>Intrinsisches Web Design</h2>
         </div>
 
-        <!-- Responsive Web Design: Begriff von Etah Marcotte geprägt. 
-         In einem Artikel auf A List Apart im Jahr 2010. Ein Jahr später wurde ein Buch draus.
-         Man musste die steigende Zahl von mobilen Geräten bedienen. 
-         Anfangs gab es noch m.zeit.de , oder mobil.spiegel.de .
-         Aber später mit mehr Devices, mehr Verbreitung, und spätestens mit Tablets,
-         habe sich Breakpoints durchgesetzt.
-         TODO: Schöne griffige Erklärung, und Hinweis um das zu googlen.
+        <!-- 
+        Der Fachbegriff für die Prinzipien, die wir gerade gesehen haben, ist "Intrinsisches Web Design".
+        Statt mit festen Breakpoints basieren die Layouts auf den intrinsischen Eigenschaften des Contents (Größe, Anzahl, Platz) und des User Agents (Device, Schriftgröße Settings).
         -->
-
 
         <div class="slide" data-slide-type="quote" data-title="Andy Bell Quote">
             <blockquote>
@@ -605,65 +639,25 @@ Sondern auch für Layouts!
 
         <!--
         Es ist nicht der intuitiv leichte Weg – aber der, der die Stärken des Browsers nutzt, 
-        Standards einsetzt, und damit einen nachhaltigen Weg geht. 
-        Genau die Idee des Lean Web, die ich so schätze.
+        Standards einsetzt, und damit einen nachhaltigen Weg geht.
         Diese Ansätze überleben jedes Framework, jede neue Major Version von Tailwind.
+        Genau die Idee des Lean Web, die ich so schätze.
         Das ist performant und accessible. 
         Es geht auf User Settings ein. Zum Beispiel bezüglich der Schriftgröße.
-        Damit ist das Web nicht für alle identisch. Aber es ist für alle gut und schön.
+        
+        Wenn ihr diese Prinzipien anwendet – auch Teile davon, könnt ihr euch am Ende Arbeit ersparen.
+
+        Dann ist eure Website nicht für alle Nutzenden identisch. 
+        Aber sie ist für alle gut und schön.
          -->
 
         <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <img src="./images/question.png" alt="Grayscale random image" />
+            <img src="./images/question.png" alt="" />
         </div>
 
         <!-- 
-        Und wenn ihr mich fragt: das ist das Web, das ich eigentlich will.
+        Und wenn ich mich frage: wie soll das Web eigentlich sein? Dann genau so.
         -->
-
-
-
-
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <div style="resize: both; overflow: auto; width: 90%px; height: 90%; border: 1px solid #ccc; display: inline-block;">
-                <iframe 
-                    src="./iframes/color-clamp.html" 
-                    style="width: 100%; height: 100%; border: none; display: block;">
-                </iframe>
-            </div>
-        </div>
-
-        <!-- TODO: Übergang von "Spacing" zu "Layout" -->
-
-        <!-- Regeln und Leitplanken festlegen, kein Pixeldesign. -->
-
-        <div class="slide" data-slide-type="title" data-title="Responsive/Intrinsic">
-            <h2>Intrinsisches Web Design</h2>
-            <p>Layouts, die auf den intrinsischen Eigenschaften des Contents basieren (Größe, Anzahl, Platz) statt auf festen Breakpoints.</p>
-
-            <!-- 
-            Intrinsisches Design bedeutet: Der Browser entscheidet basierend auf dem verfügbaren Platz – nicht wir mit festen Breakpoints. 
-
-            Extrinsisch (alt): "Bei 768px mache 2 Spalten, bei 1024px mache 3 Spalten"
-            Intrinsisch (neu): "Mache so viele Spalten wie reinpassen, mindestens 300px breit.
-            -->
-        </div>
-
-
-        <!-- --------------------------------------------------------------
-         Section: Layout mit Grid und minmax
-         -------------------------------------------------------------- -->
-
-         <!-- Modernes Layout mit Grid. Super flexibel und gut zu handhaben. 
-            Intrinsisches Design ist schon angelegt, und fühlt sich natürlicher an.
-            Was man traditionell machen würde: je nach Breakpoint mehr oder weniger Cols.
-            (TODO: finden ob das nicht Tailwind oder Bootstrap tatsächlich so macht ??)
-            Mag auch sinnvoll sein für bestimmte Anwendungsfälle (ich kenne Screen und Anzahl der Elemente).
-            Aber für unbekannte Inhalte und Devices spielt es voll seine Stärken aus.
-         -->
-
-
-
 
 
 </div>
