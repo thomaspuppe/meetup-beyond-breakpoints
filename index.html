@@ -9,99 +9,7 @@
 </head>
 <body>
 
-    <!-- Meta: Runde story bleibt hängen. Detail-Grfriemel nicht. -->
-    <!-- TODO: Was war Nicos Idee für responsive Web Design? Catchy Phrases einbauen. -->
-
-
     <div class="slide-container">
-        <!-- Slide 1: Title -->
-        <div class="slide" data-slide-type="title" data-title="Welcome">
-            <h1>Welcome to Vibecoding</h1>
-            <p class="subtitle">A Basecamp-Inspired Slide Deck</p>
-        </div>
-
-        <!-- Slide 2: Headline + Text -->
-        <div class="slide" data-slide-type="headline-text" data-title="Core Idea">
-            <h2>Clean & Focused</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-        </div>
-
-        <!-- Slide 3: Bullet Points -->
-        <div class="slide" data-slide-type="bullets" data-title="Key Features">
-            <h2>Key Features</h2>
-            <ul>
-                <li>Single HTML file for portability</li>
-                <li>Modern, clean Basecamp-like design</li>
-                <li>Keyboard, click, and swipe navigation</li>
-                <li>Includes multiple slide layouts</li>
-            </ul>
-        </div>
-
-        <!-- Slide 4: Image Only -->
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
-            <img src="https://picsum.photos/1600/900?grayscale" alt="Grayscale random image">
-        </div>
-
-        <!-- Slide 5: Image + Text -->
-        <div class="slide" data-slide-type="image-text" data-title="Split Layout">
-            <div class="image-container">
-                <img src="https://picsum.photos/800/600" alt="Random image">
-            </div>
-            <div class="text-container">
-                <h2>Image & Text</h2>
-                <p>Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
-            </div>
-        </div>
-
-        <!-- Slide 6: Code Example -->
-        <div class="slide" data-slide-type="code" data-title="Code Example">
-            <h2>Code Example</h2>
-            <pre><code class="language-js">
-function helloWorld() {
-  console.log("Hello, from the slide deck!");
-}
-
-// Call the function
-helloWorld();
-            </code></pre>
-        </div>
-
-        <!-- Slide 7: Headline + 4 Images with Fragments -->
-        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
-            <h2>A Gallery of Images</h2>
-            <div class="image-grid">
-                <img src="./images/font_steps.png" alt="Random image 1" class="fragment">
-                <img src="./images/font_multi_steps.png" alt="Random image 2" class="fragment">
-                <img src="./images/font_many_steps.png" alt="Random image 3" class="fragment">
-                <img src="./images/font_clamp.png" alt="Random image 4" class="fragment">
-            </div>
-        </div>
-
-        <!-- Slide 8: Code Explanation -->
-        <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
-            <h2>Dissecting CSS `clamp()`</h2>
-            <pre><code class="no-highlight">font-size: clamp(<span data-highlight-id="1">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="3">2.5rem</span>);</code></pre>
-            <div class="explanation-container">
-                <div class="fragment" data-explains="1">
-                    <p><strong>Minimum Value:</strong> This is the smallest the font size will ever be. It acts as the lower bound.</p>
-                </div>
-                <div class="fragment" data-explains="2">
-                    <p><strong>Preferred Value:</strong> This is the ideal, flexible value that scales with the viewport width.</p>
-                </div>
-                <div class="fragment" data-explains="3">
-                    <p><strong>Maximum Value:</strong> This is the largest the font size can get, acting as the upper bound.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Quote -->
-        <div class="slide" data-slide-type="quote" data-title="A Wise Quote">
-            <blockquote>
-                "The most important thing in communication is hearing what isn't said."
-            </blockquote>
-            <footer>&mdash; Peter Drucker</footer>
-        </div>
-
 
         <!-- ===============================================================
          +++ +++ +++ +++ Real Content Starts Here. +++ +++ +++ +++ +++
@@ -779,5 +687,89 @@ Sondern auch für Layouts!
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<!--
+
+        <div class="slide" data-slide-type="title" data-title="Welcome">
+            <h1>Welcome to Vibecoding</h1>
+            <p class="subtitle">A Basecamp-Inspired Slide Deck</p>
+        </div>
+
+        <div class="slide" data-slide-type="headline-text" data-title="Core Idea">
+            <h2>Clean & Focused</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        </div>
+
+        <div class="slide" data-slide-type="bullets" data-title="Key Features">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Single HTML file for portability</li>
+                <li>Modern, clean Basecamp-like design</li>
+                <li>Keyboard, click, and swipe navigation</li>
+                <li>Includes multiple slide layouts</li>
+            </ul>
+        </div>
+
+        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+            <img src="https://picsum.photos/1600/900?grayscale" alt="Grayscale random image">
+        </div>
+
+        <div class="slide" data-slide-type="image-text" data-title="Split Layout">
+            <div class="image-container">
+                <img src="https://picsum.photos/800/600" alt="Random image">
+            </div>
+            <div class="text-container">
+                <h2>Image & Text</h2>
+                <p>Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
+            </div>
+        </div>
+
+        <div class="slide" data-slide-type="code" data-title="Code Example">
+            <h2>Code Example</h2>
+            <pre><code class="language-js">
+function helloWorld() {
+  console.log("Hello, from the slide deck!");
+}
+
+// Call the function
+helloWorld();
+            </code></pre>
+        </div>
+
+        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
+            <h2>A Gallery of Images</h2>
+            <div class="image-grid">
+                <img src="./images/font_steps.png" alt="Random image 1" class="fragment">
+                <img src="./images/font_multi_steps.png" alt="Random image 2" class="fragment">
+                <img src="./images/font_many_steps.png" alt="Random image 3" class="fragment">
+                <img src="./images/font_clamp.png" alt="Random image 4" class="fragment">
+            </div>
+        </div>
+
+        <div class="slide" data-slide-type="code-explanation" data-title="Code Explanation: clamp()">
+            <h2>Dissecting CSS `clamp()`</h2>
+            <pre><code class="no-highlight">font-size: clamp(<span data-highlight-id="1">1.25rem</span>, <span data-highlight-id="2">2vw + 1rem</span>, <span data-highlight-id="3">2.5rem</span>);</code></pre>
+            <div class="explanation-container">
+                <div class="fragment" data-explains="1">
+                    <p><strong>Minimum Value:</strong> This is the smallest the font size will ever be. It acts as the lower bound.</p>
+                </div>
+                <div class="fragment" data-explains="2">
+                    <p><strong>Preferred Value:</strong> This is the ideal, flexible value that scales with the viewport width.</p>
+                </div>
+                <div class="fragment" data-explains="3">
+                    <p><strong>Maximum Value:</strong> This is the largest the font size can get, acting as the upper bound.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide-type="quote" data-title="A Wise Quote">
+            <blockquote>
+                "The most important thing in communication is hearing what isn't said."
+            </blockquote>
+            <footer>&mdash; Peter Drucker</footer>
+        </div>
+    
+-->
+
 </body>
 </html>
