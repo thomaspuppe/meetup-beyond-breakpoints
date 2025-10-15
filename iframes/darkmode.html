@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Font Clamp</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        /*
+:root {
+    --z-ds-color-text-100: #252525; // Primary Information
+    --z-ds-color-text-70: #444; // Secondary Information
+    --z-ds-color-text-40: #999; // Low Prio
+    --z-ds-color-background-0: #fff; // Primary
+}
+:root {
+    @media (prefers-color-scheme: dark) {
+        --z-ds-color-text-100: #fff;
+        --z-ds-color-text-70: #bababa;
+        --z-ds-color-text-40: #8b8b8b;
+        --z-ds-color-background-0: #121212;
+    }
+}
+    */
+:root {
+    color-scheme: light dark;
+    --z-ds-color-text-100: light-dark(#252525, #fff); // Primary Information
+    --z-ds-color-text-70: light-dark(#444, #bababa); // Secondary Information
+    --z-ds-color-text-40: light-dark(#999, #8b8b8b); // Low Prio
+    --z-ds-color-background-0: light-dark(#fff, #121212); // Primary
+}
+
+body {
+    background: var(--z-ds-color-background-0);
+    color: var(--z-ds-color-text-100);
+}
+    </style>
+</head>
+<body>
+    <h2>+++ EILMELDUNG +++</h2>
+    <h1>Musik: Boyzone macht Bühnen-Comeback</h1>
+    <p>Sind denn die 90er-Jahre zurück? Zumindest was Musik betrifft, könnte man manchmal den Eindruck bekommen. Nach Oasis hat nun auch die irische Boyband Boyzone eine Rückkehr auf die Bühne angekündigt - vorerst aber nur einmalig. «Wir werden noch einmal gemeinsam auf der Bühne stehen für eine weltweit einzigartige Show im Emirates-Stadion am Samstag, den 6. Juni 2026», hieß es auf dem Instagram-Account der Band um Ronan Keating (48). Tickets für das Londoner Konzert sind demnach vom 7. Oktober an erhältlich.</p>
+</body>
+</html>
+
