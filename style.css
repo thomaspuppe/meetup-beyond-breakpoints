@@ -451,3 +451,131 @@ aside {
 .iframe-device iframe {
     width: 100%; height: 100%; border: none; display: block;
 }
+
+/* Print Styles */
+@media print {
+    :root {
+        --print-notes-font-size: 12pt; /* Single variable for easy font size adjustment */
+    }
+
+    /* Reset body and container styling for printing */
+    body {
+        overflow: visible;
+        display: block;
+        height: auto;
+        background-color: white;
+        color: black;
+        padding: 1cm;
+        margin: 0;
+        font-family: var(--font-family);
+    }
+
+    /* Show all slides in print layout */
+    .slide-container {
+        width: 100%;
+        height: auto;
+        position: static;
+        display: block;
+    }
+
+    /* Style each slide as a small preview */
+    .slide {
+        clear: both;
+        position: relative;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 4cm;
+        height: 4.25cm;
+        padding: 0.2cm;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        display: block;
+        float: left;
+        page-break-inside: avoid;
+        /* We need to scale down the content to fit in 4cm */
+        transform: scale(0.8);
+        transform-origin: top left;
+    }
+    
+    /* Allow internal slide elements to appear at original size */
+    .slide > * {
+        transform-origin: top left;
+    }
+
+    /* Show all fragments in printed version */
+    .fragment {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Show speaker notes */
+    aside {
+        clear: both;
+        display: block;
+        visibility: visible;
+        position: relative;
+        left: auto;
+        top: auto;
+        margin-left: 4.5cm; /* Position notes to the right of the slide */
+        margin-bottom: 1.5cm;
+        padding-bottom: 0.5cm;
+        border-bottom: 1px dotted #ccc;
+        font-size: var(--print-notes-font-size);
+        line-height: 1.5;
+        text-align: left;
+        color: #333;
+        width: 13cm; /* Allow enough space for notes on A4 */
+        white-space: pre-wrap;
+        clear: right;
+    }
+
+    /* Hide presentation UI elements */
+    .slide-counter,
+    .progress-bar,
+    .fullscreen-hint,
+    .toc-overlay,
+    .grid-overlay {
+        display: none;
+    }
+
+    h1, h2 {
+        font-size: unset !important;
+    }
+
+    /* Add slide title/number as label */
+    .slide::after {
+        content: "Slide " attr(data-slide-number) ": " attr(data-title);
+        position: absolute;
+        bottom: -1.2cm;
+        left: 0;
+        font-size: var(--print-notes-font-size);
+        font-weight: bold;
+        white-space: nowrap;
+        color: black;
+    }
+
+    /* Set up page format */
+    @page {
+        size: A4;
+        margin: 1.0cm;
+    }
+
+    /* Fix code formatting */
+    pre {
+        overflow: hidden;
+        max-width: 100%;
+    }
+    
+    /* Handle specific slide types */
+    .slide[data-slide-type="image-only"] img,
+    .slide[data-slide-type="image-only-contain"] img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+    /* Make iframes static in print */
+    .iframe-device {
+        border: 1px solid #ccc;
+        overflow: hidden;
+    }
+}
