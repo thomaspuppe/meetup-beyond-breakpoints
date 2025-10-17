@@ -28,7 +28,7 @@ Guten Abend. Ich möchte mit euch über CSS sprechen. (Also erstmal zu euch, und
 Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
 </aside>
 
-        <div class="slide" data-slide-type="title" data-title="Willkommen 2">
+        <div class="slide" data-slide-type="title" data-title="Thomas">
             <h1>Hi, ich bin Thomas 👋</h1>
                 <img src="images/toy-face.png" width="300px"/>
                 <h2>								
@@ -43,7 +43,7 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
         Damit passe ich ganz gut zu ZEIT. (Formerly ZEIT Online.)
         </aside>
 
-        <div class="slide" data-slide-type="title" data-title="Willkommen 3">
+        <div class="slide" data-slide-type="title" data-title="ZEIT">
             <h1>zeit.de</h1>
             <div class="r-hstack" style="gap:5vw">
                 <img src="images/zeit_screenshot-1.png" style="width:min(100%, 35vw)"/>
@@ -59,7 +59,7 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
         Also dass man sich lieber auf den Browser verlässt, und dessen Fähigkeiten nutzt, anstatt das Rad selber neu zu erfinden.
         </aside>
 
-        <div class="slide" data-slide-type="title" data-title="Willkommen">
+        <div class="slide" data-slide-type="title" data-title="CSS Beyond Breakpoints">
             <h1>CSS Beyond Breakpoints</h1>
             <p class="subtitle">Design und Layout ohne Breakpoints, dafür mit modernem CSS.</p>
         </div>
@@ -77,7 +77,7 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
          -------------------------------------------------------------- -->
 
         <!-- TODO: data-title nur nutzen, wenn keine h1/h2 verfügbar ist. -->
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
+        <div class="slide" data-slide-type="code" data-title="Dark Mode mit MQ">
             <p>CSS Vars: Colors</p>
             <h2>Dark Mode früher 🦣</h2>
 <pre class="fragment"><code class="language-css">
@@ -93,7 +93,7 @@ Mein Name ist Thomas Puppe. Ich bin Senior Frontend Developer bei der ZEIT.
 	}
 </code></pre>
         </div>
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
+        <div class="slide" data-slide-type="code" data-title="Dark Mode mit Vars und MQ">
             <p>CSS Vars: Colors</p>
             <h2>Dark Mode mit CSS Vars 🐘</h2>
 <pre><code class="language-css">
@@ -117,7 +117,7 @@ body {
 }
 </code></pre>
         </div>
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Colors">
+        <div class="slide" data-slide-type="code" data-title="Dark Mode mit light-dark()">
             <p>CSS Vars: Colors mit CSS Functions</p>
             <h2>Dark Mode mit light-dark() 🦄</h2>
 <pre><code class="language-css">
@@ -145,7 +145,7 @@ body {
         So wie ich Farben im CSS als globale Design Tokens definiere, und dann nur noch benutze, so gehe ich auch mit Schriftgrößen um.
         </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <div class="slide" data-slide-type="code" data-title="Font Sizes mit Vars und MQ">
             <h2>CSS Vars: Font Sizes</h2>
 <pre><code class="language-css">
 --zeit-fontsize-s: 1rem;
@@ -174,7 +174,7 @@ Auf gar keinen Fall will ich innerhalb meines Teaser-Designs mit Breakpoints han
 Ich habe ein Set an Schriftgrößen, die sind untereinander austariert, und mit denen arbeite ich.
 </aside>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Font Size Demo">
             <div class="iframe-device">
                 <iframe 
                     src="./iframes/font-breakpoint.html" 
@@ -189,7 +189,7 @@ Das ist ganz cool. Aber: irgendwie unbefriedigend an manchen Stellen.
 Kurz vor dem Breakpoint ist die Schrift etwas verloren. Und kurz danach etwas zu groß vielleicht.
 </aside>
 
-        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
+        <div class="slide" data-slide-type="headline-images" data-title="Font Size MQ Step 3 Graphs">
             <h2>Breakpoints für Font Sizes</h2>
             <div class="image-grid">
                 <img src="./images/font_steps.png" alt="" class="fragment">
@@ -202,7 +202,7 @@ Jetzt könnte ich in kleineren Schritten vorgehen.
 Das wird unhandlich. Aber es führt uns zu einer spannenden Frage:
 </aside>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Font Size: Question">
             <img src="./images/question.png" alt="">
         </div>
 
@@ -214,7 +214,7 @@ Was ich eigentlich will, ist, dass sich die Schrift dem Bildschirm anpasst. Prop
 </aside>
 
 
-        <div class="slide" data-slide-type="headline-images" data-title="Image Grid">
+        <div class="slide" data-slide-type="headline-images" data-title="Font Size MQ Step 4 Graphs">
             <h2>Breakpoints für Font Sizes</h2>
             <div class="image-grid">
                 <img src="./images/font_steps.png" alt="">
@@ -251,7 +251,7 @@ Und genau das erreichen wir mit bildschirm-relationalen Einheiten, und mit clamp
 Das Ergebnis in meinem CSS File für Design System Tokens ist dann so etwas hier:
 </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <div class="slide" data-slide-type="code" data-title="clamp() in Font Size Tokens">
             <p>CSS Vars: Font Sizes</p>
             <h2>Font Size Design Tokens mit `clamp()` 🦄</h2>
 <pre><code class="language-css">
@@ -272,7 +272,7 @@ Das Ergebnis in meinem CSS File für Design System Tokens ist dann so etwas hier
 Und so sieht das aus:
 </aside>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Demo: Font Size mit Clamp">
             <div class="iframe-device">
                 <iframe 
                     src="./iframes/font-clamp.html" 
@@ -282,7 +282,7 @@ Und so sieht das aus:
         </div>
 
 
-        <div class="slide" data-slide-type="title" data-title="Willkommen 2">
+        <div class="slide" data-slide-type="title" data-title="Utopia.fyi">
 
                 <img src="images/utopia.png" width="90%"/>
                 <h2>								
@@ -298,7 +298,7 @@ Apropos Werte und Interpolation ... mit Clamp berechnen wir ja Größen-Einheite
 Und die kann ich natürlich nicht nur für Schriftgrößen nehmen, sondern auch für mein Whitespace System.
 </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing">
+        <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing mit Clamp">
             <p>CSS Vars: Spacing</p>
             <h2>Spacing mit `clamp()` 🦄</h2>
 
@@ -323,12 +323,15 @@ p {
 Minimalwerte, Skalierung mit Bildschirm, Maximalwerte.
 Ich hab jetzt hier nur Text-Elemente und ihr Margin genommen.
 Das setzen wir aber natürlich auch für Grid-Gaps ein. Für Abstände zwischen Komponenten.
+
+Für Spacing gibt es auch ein Online-Tool von utopia.fyi !
+
 Aber für das Schriften-Beispiel gilt:
 Bei Paragraphs setzen wir das kleinere Spacing ein, bei Überschriften das größere.
 Jetzt kann man sich fragen ... 
 </aside>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Question: Spacing px">
             <img src="./images/question.png" alt="" />
         </div>
 
@@ -339,7 +342,7 @@ Sondern ich will, dass goßer Text mehr Spacing hat als kleiner Text.
 Dafür gibt es schriftrelatve Einheiten in CSS! 
 </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Spacing">
+        <div class="slide" data-slide-type="code" data-title="Spacing mit font relative units">
 <h2>Spacing mit relativen Einheiten 🦄</h2>
 <pre class="fragment"><code class="language-css">h1, h2 {
     margin-block: 2em;
@@ -371,11 +374,11 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         Und jetzt kommt ein wichtiger Rat: 
         </aside>
 
-        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only-contain" data-title="Talk to your Designer">
             <img src="./images/dinos-discuss.png" alt="" />
         </div>
 
-        <aside>
+        <aside>( 10 Minuten )
         Sprecht mal mit euren Designer:innen über solche Regeln. Wenn ihr ganz viel Glück habt, 
         haben die sich vielleicht was dabei gedacht, als sie die Werte festgelegt haben. 
         Sowas wie ein System. Fürs Design.
@@ -384,6 +387,8 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
         
         Und wir als Entwickler:innen nehmen das als feste Größen pro Breakpoint.
         Weil uns die gemeinsame Sprache fehlt für die Welt zwischen den Breakpoint-Designs.
+
+        Und für diejenigen unter euch, die aus der Design-Ecke kommen: traut den Devs das zu.
 
         Und dabei geht es nicht darum, die Dinge kompliziert aufzuschreiben mit Container Queries und Character Size Units.
         Sondern darum, sie nur einmal aufzuschreiben. Zum Beispiel den Abstand zwischen Headlines und egal-was-drumherum-ist.
@@ -424,10 +429,10 @@ Dafür gibt es schriftrelatve Einheiten in CSS!
 
 <aside>
 Und hier kommt der Witz: diese Prinzipien funktionieren nicht nur für Spacing und Schriftgrößen.
-Sondern auch für Layouts!
+Sondern auch für Layouts! Das unterstützt sich gegenseitig sehr gut!
 </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <div class="slide" data-slide-type="code" data-title="Layout mit MQ">
             <h2>Breakpoints 🦣</h2>
 <pre><code class="language-css">
 .container > * {
@@ -454,7 +459,7 @@ Sondern auch für Layouts!
         da wird es dann komplex. 
         </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <div class="slide" data-slide-type="code" data-title="Layout mit Grid und MQ">
             <h2>Grid 🐘</h2>
 <pre><code class="language-css">
 .product-gallery {
@@ -476,15 +481,15 @@ Sondern auch für Layouts!
         Deshalb benutzen wir alle CSS Grids. Bei denen wir die Zahl der Columns festlegen können.
         </aside>
 
-        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only-contain" data-title="Grid Dinoshop">
             <img src="./images/grid_dinoshop.png" alt="" />
         </div>
 
-        <div class="slide" data-slide-type="image-only-contain" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only-contain" data-title="Grid Dinoshop 2">
             <img src="./images/grid_dinoshop-2.png" alt="" />
         </div>
 
-        <div class="slide" data-title="Inspirational Image">
+        <div class="slide" data-title="Code Dinoshop">
             <div class="r-hstack" style="gap:5vw">
                 <img src="./images/grid_dinoshop-3.png" alt="" style="max-width:50%;max-height:40%;" />
                 <img src="./images/grid_dinoshop-4.png" alt="" style="max-width:60%;max-height:80%;"/>
@@ -500,11 +505,11 @@ Sondern auch für Layouts!
         bis zu meinem maximalen Breakpoint durchdeklinieren.
         </aside>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Question">
             <img src="./images/question.png" alt="" />
         </div>
 
-        <aside>
+        <aside>( 15 Minuten )
         Es stellt sich wieder die Frage: Was will ich _eigentlich_ erreichen? 
         Ich will dass die Produkte den Platz einnehmen, den sie zur Verfügung haben.
         Sei es der Screen, oder eine sinnvolle Leitplanke von 2000 Pixeln. 
@@ -514,19 +519,23 @@ Sondern auch für Layouts!
         Genau das kann ich mit modernem CSS ausdrücken.
         </aside>
 
-        <div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <div class="slide" data-slide-type="code" data-title="Auto-Grid">
             <h2>Auto-Grid 🦄</h2>
 <pre class="fragment"><code class="language-css">
 .product-gallery {
   display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+  // oder 
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  
   gap: 2rem;
 }
 
 </code></pre>
         </div>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Demo: Grid 8">
             <div class="iframe-device">
                 <iframe 
                     src="./iframes/grid-fillfit-8.html" 
@@ -535,7 +544,7 @@ Sondern auch für Layouts!
             </div>
         </div>
 
-        <div class="slide" data-slide-type="image-only" data-title="Inspirational Image">
+        <div class="slide" data-slide-type="image-only" data-title="Demo: Grid 3 fill/fit">
             <div class="iframe-device">
                 <iframe 
                     src="./iframes/grid-fillfit-3.html" 
@@ -556,7 +565,7 @@ Sondern auch für Layouts!
         dem Zählen der Elemente per JS oder serverseitig machen.
         </aside>
 
-        <!--div class="slide" data-slide-type="code" data-title="CSS Vars: Font Sizes">
+        <!--div class="slide" data-slide-type="code" data-title="Font Size with Container Query Unit">
             <h2>Container Query und Container-Inline-Size 🦄</h2>
 <pre><code class="language-css">.grid > div {
     container-type: inline-size;
@@ -572,7 +581,7 @@ Sondern auch für Layouts!
         Zum Beispiel bei den Teasern der ZEIT.
         </aside>
 
-        <div class="slide" data-title="Inspirational Image">
+        <div class="slide" data-title="ZEIT Teaser">
             <div class="r-hstack" style="gap:5vw">
                 <img src="./images/grid_zeit-teaser_mobil.png" alt="" style="max-width:50%;max-height:40%;" />
                 <img src="./images/grid_zeit-teaser_desktop.png" alt="" style="max-width:60%;max-height:80%;"/>
@@ -584,7 +593,7 @@ Sondern auch für Layouts!
         (Weil es keins gibt, weil die Eilmeldung raus muss bevor es Bildmaterial gibt, oder weil Bildrechte abgelaufen sind.)
         </aside>
 
-        <div class="slide" data-slide-type="code" data-title="Teaser bei ZEIT">
+        <div class="slide" data-slide-type="code" data-title="CSS: ZEIT Teaser Grid">
             <h2>Teaser bei ZEIT</h2>
 <pre><code class="language-css">
 	--teaser-column-auto-width: calc(
@@ -604,7 +613,7 @@ Sondern auch für Layouts!
         </div>
 
 
-        <aside>
+        <aside>( 20 Minuten )
         Wir setzen uns eine Variable für die Breite, die ein Teaser-Element idealerweise haben soll.
         Das müssen wir in dem Fall tun, weil andere Teile der Seite noch klassische Breakpoints haben.
         Wir sagen, dass das Element Bildschirm/Containerbreit sein soll (min aus 100 und var), oder nebeneinander laufen (1fr).
@@ -613,10 +622,12 @@ Sondern auch für Layouts!
 
         Damit reagiert der Teaser auf sein Umfeld – und zwar nicht nur auf verschiedene Screens.
         Sondern er ist auch in verschiedenen Layouts einsetzbar. Zweispaltig, dreispaltig, Karusselle, you name it.
+
+        Außerdem beim Zoomen und bei Schriftgrößen!
         </aside>
 
 
-        <div class="slide" data-slide-type="title" data-title="Willkommen">
+        <div class="slide" data-slide-type="title" data-title="Fazit">
             <h1 style="margin-bottom:1.5em;">CSS Beyond Breakpoints</h1>
             <p class="subtitle">Fazit</p>
         </div>
@@ -691,6 +702,15 @@ Sondern auch für Layouts!
     <script src="vendor/prism/prism.min.js"></script>
     <script src="vendor/prism/prism-autoloader.min.js"></script>
     <script src="vendor/prism/prism-config.js"></script>
+
+<!--
+Feedback/Ideen nach dem Vortrag
+- mehr grafisch illustrieren, was das CSS tut (line height mit/ohne Runden. Margin mit em über verschiedene Textblöcke)!
+- utopia.fyi: Hinweisen darauf, dass man verschiedene Steigungen haben sollte.
+- deutlich machen, dass ZEIT nicht komplett so gebaut ist.
+- ZEIT Teaser als Demo zeigen, und da dran das Grid entwickeln. Dann im iframe zeigen, dass Zoomen das Layout verändert.
+-->
+
 
 <!--
 
